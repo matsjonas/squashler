@@ -43,8 +43,14 @@ public class Game extends Model {
         return find.ref(id);
     }
 
-    public static Game insert(Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
+    public static Game insert(Game game) {
+        game.save();
+        return game;
+    }
+
+    public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
         Game newGame = new Game();
+        newGame.date = date;
         newGame.playerLeft = playerLeft;
         newGame.playerRight = playerRight;
         newGame.pointsLeft = pointsLeft;

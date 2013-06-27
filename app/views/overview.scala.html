@@ -1,3 +1,5 @@
+@(allGames: List[Game], gameForm: Form[Game])
+
 @main("squashler") {
 
     <table>
@@ -15,56 +17,35 @@
             <th>Result</th>
             <th>Winner</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>2013-06-01</td>
-            <td>Kenny</td>
-            <td>1000</td>
-            <td>100</td>
-            <td>1100</td>
-            <td>Benny</td>
-            <td>1000</td>
-            <td>100</td>
-            <td>900</td>
-            <td>1 - 0</td>
-            <td>Kenny</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>2013-06-01</td>
-            <td>Benny</td>
-            <td>900</td>
-            <td>90</td>
-            <td>810</td>
-            <td>Denny</td>
-            <td>1000</td>
-            <td>100</td>
-            <td>1090</td>
-            <td>0 - 1</td>
-            <td>Denny</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>2013-06-01</td>
-            <td>Denny</td>
-            <td>1090</td>
-            <td>109</td>
-            <td>1200</td>
-            <td>Kenny</td>
-            <td>1100</td>
-            <td>110</td>
-            <td>990</td>
-            <td>1 - 0</td>
-            <td>Denny</td>
-        </tr>
+        @for((game, index) <- allGames.zipWithIndex) {
+            <tr>
+                <td>@game.id</td>
+                <td>@game.date.format("yyyy-MM-dd")</td>
+                <td>@game.playerLeft.name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@game.playerRight.name</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@game.pointsLeft - @game.pointsRight</td>
+                <td></td>
+            </tr>
+        }
     </table>
 
+    @if(gameForm.hasErrors) {
+        <div class="alert alert-error">
+            <strong>Unable to insert game!</strong>
+        </div>
+    }
     <form action="@routes.Application.insert()" method="post">
         <input type="text" name="date" placeholder="date" value="2013-06-27"/>
-        <input type="text" name="player1" placeholder="player 1" value=""/>
-        <input type="text" name="player2" placeholder="player 2" value=""/>
-        <input type="text" name="points1" placeholder="points 1" value=""/>
-        <input type="text" name="points2" placeholder="points 2" value=""/>
+        <input type="text" name="playerLeft" placeholder="player left" value=""/>
+        <input type="text" name="playerRight" placeholder="player right" value=""/>
+        <input type="text" name="pointsLeft" placeholder="points left" value=""/>
+        <input type="text" name="pointsRight" placeholder="points right" value=""/>
         <input type="submit" name="insert" value="Insert"/>
     </form>
 
