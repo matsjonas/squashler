@@ -1,5 +1,6 @@
 package models;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -14,16 +15,21 @@ public class Game extends Model {
     @Id
     public long id;
 
+    @Constraints.Required
     public Date date;
 
     @ManyToOne()
+    @Constraints.Required
     public Player playerLeft;
 
     @ManyToOne()
+    @Constraints.Required
     public Player playerRight;
 
+    @Constraints.Required
     public int pointsLeft;
 
+    @Constraints.Required
     public int pointsRight;
 
     @SuppressWarnings("unchecked")
