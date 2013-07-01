@@ -2,7 +2,7 @@ package controllers;
 
 import models.Game;
 import models.Player;
-import play.data.Form;
+import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -32,7 +32,7 @@ public class Application extends Controller {
 
     public static Result insert() {
 
-        Form filledForm = gameForm.bindFromRequest();
+        DynamicForm filledForm = gameForm.bindFromRequest();
         String dateString = (String) filledForm.data().get("date");
         String playerLeftName = (String) filledForm.data().get("playerLeft");
         String playerRightName = (String) filledForm.data().get("playerRight");
@@ -59,6 +59,6 @@ public class Application extends Controller {
         }
     }
 
-    static Form gameForm = Form.form();
+    static DynamicForm gameForm = DynamicForm.form();
 
 }
