@@ -11,12 +11,22 @@ import java.util.List;
 @Entity
 public class Player extends Model {
 
+    public static final int STARTING_POINTS = 1000;
+
     @Id
     public long id;
 
     @Constraints.Required
     @Column(unique = true)
     public String name;
+
+    int currentPoints;
+
+    int nbrGames;
+
+    int wins;
+
+    int losses;
 
     @SuppressWarnings("unchecked")
     public static Finder<Long, Player> find = new Finder(Long.class, Player.class);
@@ -40,9 +50,23 @@ public class Player extends Model {
         } else {
             Player newPlayer = new Player();
             newPlayer.name = name;
+            newPlayer.currentPoints = STARTING_POINTS;
+            newPlayer.nbrGames = 0;
+            newPlayer.wins = 0;
+            newPlayer.losses = 0;
             newPlayer.save();
             return newPlayer;
         }
+    }
+
+    public void addPoints(int points) {
+        currentPoints += points;
+        this.save();
+    }
+
+    public void withdrawPoints(int points) {
+        currentPoints -= points;
+        this.save();
     }
 
 }

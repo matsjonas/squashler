@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 public class Game extends Model {
 
+    public static final double STAKE_PER_GAME = 0.1;
+
     @Id
     public long id;
 
@@ -22,9 +24,17 @@ public class Game extends Model {
     @Constraints.Required
     public Player playerLeft;
 
+    public int beforeLeft;
+    public int stakeLeft;
+    public int afterLeft;
+
     @ManyToOne()
     @Constraints.Required
     public Player playerRight;
+
+    public int beforeRight;
+    public int stakeRight;
+    public int afterRight;
 
     @Constraints.Required
     public int pointsLeft;
@@ -49,14 +59,36 @@ public class Game extends Model {
     }
 
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
-        Game newGame = new Game();
-        newGame.date = date;
-        newGame.playerLeft = playerLeft;
-        newGame.playerRight = playerRight;
-        newGame.pointsLeft = pointsLeft;
-        newGame.pointsRight = pointsRight;
-        newGame.save();
-        return newGame;
+        Game game = new Game();
+        game.date = date;
+        game.playerLeft = playerLeft;
+        game.playerRight = playerRight;
+        game.pointsLeft = pointsLeft;
+        game.pointsRight = pointsRight;
+
+        game.beforeLeft = playerLeft.currentPoints;
+        game.stakeLeft = (int) (game.beforeLeft * STAKE_PER_GAME);
+
+        game.beforeRight = playerRight.currentPoints;
+        game.stakeRight = (int) (game.beforeRight * STAKE_PER_GAME);
+
+        if (pointsLeft > pointsRight) {
+            game.afterLeft = game.beforeLeft + game.stakeRight;
+            game.afterRight = game.beforeRight - game.stakeRight;
+            playerLeft.addPoints(game.stakeRight);
+            playerRight.withdrawPoints(game.stakeRight);
+        } else if (pointsRight > pointsLeft) {
+            game.afterLeft = game.beforeLeft - game.stakeLeft;
+            game.afterRight = game.beforeRight + game.stakeLeft;
+            playerLeft.withdrawPoints(game.stakeLeft);
+            playerRight.addPoints(game.stakeLeft);
+        } else {
+            game.afterLeft = game.beforeLeft;
+            game.afterRight = game.beforeRight;
+        }
+
+        game.save();
+        return game;
     }
 
 }
