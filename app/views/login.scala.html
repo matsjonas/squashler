@@ -1,9 +1,19 @@
+@(loginForm: Form[Application.LoginCredentials])
+
 @main("squashler") {
-    
+
+    @if(loginForm.hasErrors) {
+        <div class="alert alert-error">
+            <strong>Unable to login!</strong>
+            @loginForm.globalErrors.map { error =>
+                <div>@error.message</div>
+            }
+        </div>
+    }
     <form action="@routes.Application.login" method="post">
-        <input type="text" name="username" placeholder="user" value=""/>
+        <input type="text" name="username" placeholder="username" value=""/>
         <input type="password" name="password" placeholder="password" value=""/>
         <input type="submit" name="login" value="Login"/>
     </form>
-    
+
 }

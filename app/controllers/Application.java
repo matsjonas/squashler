@@ -3,14 +3,18 @@ package controllers;
 import models.Game;
 import models.Player;
 import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.*;
 import play.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static play.data.Form.form;
 
 public class Application extends Controller {
 
@@ -19,17 +23,31 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        return ok(login.render());
+        return ok(login.render(form(LoginCredentials.class)));
     }
 
-    public static Result loginUser() {
-        return redirect(routes.Application.overview());
+    public static Result authenticate() {
+        Form<LoginCredentials> loginForm = form(LoginCredentials.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        } else {
+            session().clear();
+            session("username", loginForm.get().username);
+            return redirect(routes.Application.overview());
+        }
     }
 
+    public static Result logout() {
+        session().clear();
+        return redirect(routes.Application.login());
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result overview() {
         return ok(overview.render(Game.all(), gameForm));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result insert() {
 
         DynamicForm filledForm = gameForm.bindFromRequest();
@@ -60,5 +78,19 @@ public class Application extends Controller {
     }
 
     static DynamicForm gameForm = DynamicForm.form();
+
+    public static class LoginCredentials {
+
+        public String username;
+        public String password;
+
+        public String validate() {
+            if(!username.equals("admin") || !password.equals("monkeyballs")) {
+                return "Invalid username or password";
+            }
+            return null;
+        }
+
+    }
 
 }
