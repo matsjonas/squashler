@@ -20,13 +20,13 @@ public class Player extends Model {
     @Column(unique = true)
     public String name;
 
-    int currentPoints;
+    public int currentPoints;
 
-    int nbrGames;
+    public int nbrGames;
 
-    int wins;
+    public int wins;
 
-    int losses;
+    public int losses;
 
     @SuppressWarnings("unchecked")
     public static Finder<Long, Player> find = new Finder(Long.class, Player.class);
