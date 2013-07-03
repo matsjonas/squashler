@@ -44,7 +44,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result overview() {
-        return ok(overview.render(Game.all(), gameForm));
+        return ok(overview.render(Player.all(), Game.all(), gameForm));
     }
 
     @Security.Authenticated(Secured.class)
@@ -70,7 +70,7 @@ public class Application extends Controller {
         int pointsRight = Integer.parseInt(pointsRightString);
 
         if(filledForm.hasErrors()) {
-            return badRequest(overview.render(Game.all(), filledForm));
+            return badRequest(overview.render(Player.all(), Game.all(), filledForm));
         } else {
             Game.insert(date, player1, player2, pointsLeft, pointsRight);
             return redirect(routes.Application.overview());

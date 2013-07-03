@@ -1,7 +1,28 @@
-@(allGames: List[Game], gameForm: DynamicForm)
+@(players: List[Player], allGames: List[Game], gameForm: DynamicForm)
 @import play.data.DynamicForm
 
 @main("squashler") {
+
+    <table>
+        <tr>
+            <th>Pos.</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Games</th>
+            <th>Wins</th>
+            <th>Losses</th>
+        </tr>
+        @for((player, index) <- players.zipWithIndex) {
+            <tr>
+                <td>@{index + 1}</td>
+                <td>@player.name</td>
+                <td>@player.currentPoints</td>
+                <td>@player.nbrGames</td>
+                <td>@player.wins</td>
+                <td>@player.losses</td>
+            </tr>
+        }
+    </table>
 
     <table>
         <tr>

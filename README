@@ -8,7 +8,7 @@ Squash ladder web application
 - [x] Add basic security
 - [ ] Don't store the logged in username in clear text in the cookie
 - [ ] Styling
-- [ ] Display current standings
+- [x] Display current standings
 - [ ] Add a start/splash page
 - [ ] Do not allow registration of games where the two players are the same player (e.g. Adam vs. Adam)
 - [ ] Support inserting of old games (i.e. recalculate all newer games' results)
