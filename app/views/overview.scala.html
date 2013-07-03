@@ -11,6 +11,7 @@
             <th>Games</th>
             <th>Wins</th>
             <th>Losses</th>
+            <th>%</th>
         </tr>
         @for((player, index) <- players.zipWithIndex) {
             <tr>
@@ -20,6 +21,7 @@
                 <td>@player.nbrGames</td>
                 <td>@player.wins</td>
                 <td>@player.losses</td>
+                <td>@{100 * player.wins / player.nbrGames}%</td>
             </tr>
         }
     </table>
