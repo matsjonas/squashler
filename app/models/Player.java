@@ -61,11 +61,15 @@ public class Player extends Model {
 
     public void addPoints(int points) {
         currentPoints += points;
+        nbrGames++;
+        wins++;
         this.save();
     }
 
     public void withdrawPoints(int points) {
         currentPoints -= points;
+        nbrGames++;
+        losses++;
         this.save();
     }
 
