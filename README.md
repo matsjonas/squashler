@@ -15,10 +15,14 @@ $ play run
 
 ## TODO:
 
-- [x] Add basic security
 - [ ] Don't store the logged in username in clear text in the cookie
+- [ ] Real user management
 - [ ] Styling
-- [x] Display current standings
 - [ ] Add a start/splash page
 - [ ] Do not allow registration of games where the two players are the same player (e.g. Adam vs. Adam)
+- [ ] Allow sorting of games that where played on the same date
 - [ ] Support inserting of old games (i.e. recalculate all newer games' results)
+
+- [x] Add basic security
+- [x] Display current standings
+
