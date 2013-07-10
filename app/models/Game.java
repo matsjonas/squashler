@@ -20,6 +20,8 @@ public class Game extends Model {
     @Constraints.Required
     public Date date;
 
+    public int gameNbr;
+
     @ManyToOne()
     @Constraints.Required
     public Player playerLeft;
@@ -61,6 +63,7 @@ public class Game extends Model {
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
         Game game = new Game();
         game.date = date;
+        game.gameNbr = getMaxGameNbr() + 1;
         game.playerLeft = playerLeft;
         game.playerRight = playerRight;
         game.pointsLeft = pointsLeft;
@@ -89,6 +92,15 @@ public class Game extends Model {
 
         game.save();
         return game;
+    }
+
+    private static int getMaxGameNbr() {
+        List<Game> list = find.where().orderBy("gameNbr desc").setMaxRows(1).findList();
+        if (list.isEmpty()) {
+            return 0;
+        } else {
+            return list.get(0).gameNbr;
+        }
     }
 
 }

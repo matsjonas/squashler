@@ -28,7 +28,8 @@
 
     <table>
         <tr>
-            <th>Game</th>
+            <th>Id</th>
+            <th>#</th>
             <th>Date</th>
             <th>Player 1</th>
             <th>Before</th>
@@ -44,6 +45,7 @@
         @for((game, index) <- allGames.zipWithIndex) {
             <tr>
                 <td>@game.id</td>
+                <td>@game.gameNbr</td>
                 <td>@game.date.format("yyyy-MM-dd")</td>
                 <td>@game.playerLeft.name</td>
                 <td>@game.beforeLeft</td>
