@@ -66,8 +66,8 @@ public class Application extends Controller {
         }
         Player player1 = Player.getOrCreate(playerLeftName);
         Player player2 = Player.getOrCreate(playerRightName);
-        int pointsLeft = Integer.parseInt(pointsLeftString);
-        int pointsRight = Integer.parseInt(pointsRightString);
+        int pointsLeft = Integer.parseInt(pointsLeftString.trim());
+        int pointsRight = Integer.parseInt(pointsRightString.trim());
 
         if(filledForm.hasErrors()) {
             return badRequest(overview.render(Player.all(), Game.all(), filledForm));
