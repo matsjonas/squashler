@@ -6,9 +6,11 @@ import play.mvc.Security;
 
 public class Secured extends Security.Authenticator {
 
+    public static final String COOKIE_SECURITY_KEY = "SECKEY";
+
     @Override
     public String getUsername(Http.Context ctx) {
-        return ctx.session().get("username");
+        return ctx.session().get(COOKIE_SECURITY_KEY);
     }
 
     @Override

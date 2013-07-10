@@ -4,6 +4,7 @@ import models.Game;
 import models.Player;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -32,7 +33,7 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session().clear();
-            session("username", loginForm.get().username);
+            session(Secured.COOKIE_SECURITY_KEY, Crypto.encryptAES(loginForm.get().username));
             return redirect(routes.Application.overview());
         }
     }

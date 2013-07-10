@@ -15,7 +15,6 @@ $ play run
 
 ## TODO:
 
-- [ ] Don't store the logged in username in clear text in the cookie
 - [ ] Real user management
 - [ ] Styling
 - [ ] Add a start/splash page
@@ -23,6 +22,7 @@ $ play run
 - [ ] Allow sorting of games that where played on the same date
 - [ ] Support inserting of old games (i.e. recalculate all newer games' results)
 
+- [x] Don't store the logged in username in clear text in the cookie
 - [x] Add basic security
 - [x] Display current standings
 
