@@ -48,41 +48,41 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result overview() {
-        return ok(overview.render(Player.all(), Game.all(), gameForm));
+        return ok(overview.render(Player.all(), Game.all(), DynamicForm.form()));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result insert() {
 
-        DynamicForm filledForm = gameForm.bindFromRequest();
-        String dateString = (String) filledForm.data().get("date");
-        String playerLeftName = (String) filledForm.data().get("playerLeft");
-        String playerRightName = (String) filledForm.data().get("playerRight");
-        String pointsLeftString = (String) filledForm.data().get("pointsLeft");
-        String pointsRightString = (String) filledForm.data().get("pointsRight");
+        DynamicForm gameForm = DynamicForm.form().bindFromRequest();
+        String dateString = (String) gameForm.data().get("date");
+        String playerLeftName = (String) gameForm.data().get("playerLeft");
+        String playerRightName = (String) gameForm.data().get("playerRight");
+        String pointsLeftString = (String) gameForm.data().get("pointsLeft");
+        String pointsRightString = (String) gameForm.data().get("pointsRight");
 
         Date date = null;
         try {
             date = DateUtils.parseDateStrictly(dateString, "yyyy-MM-dd");
         } catch (ParseException e) {
-            filledForm.reject("date", "Supplied date is not valid! Use the format 'yyyy-MM-dd'.");
+            gameForm.reject("date", "Supplied date is not valid! Use the format 'yyyy-MM-dd'.");
         }
 
         if (StringUtils.isBlank(playerLeftName)) {
-            filledForm.reject("playerLeft", "Left player name must not be empty.");
+            gameForm.reject("playerLeft", "Left player name must not be empty.");
         }
         if (StringUtils.isBlank(playerRightName)) {
-            filledForm.reject("playerRight", "Right player name must not be empty.");
+            gameForm.reject("playerRight", "Right player name must not be empty.");
         }
         if (!NumberUtils.isDigits(pointsLeftString)) {
-            filledForm.reject("pointsLeft", "Left points must be a valid number.");
+            gameForm.reject("pointsLeft", "Left points must be a valid number.");
         }
         if (!NumberUtils.isDigits(pointsRightString)) {
-            filledForm.reject("pointsRight", "Right points must be a valid number.");
+            gameForm.reject("pointsRight", "Right points must be a valid number.");
         }
 
-        if(filledForm.hasErrors()) {
-            return badRequest(overview.render(Player.all(), Game.all(), filledForm));
+        if(gameForm.hasErrors()) {
+            return badRequest(overview.render(Player.all(), Game.all(), gameForm));
         } else {
             Player player1 = Player.getOrCreate(playerLeftName);
             Player player2 = Player.getOrCreate(playerRightName);
@@ -92,8 +92,6 @@ public class Application extends Controller {
             return redirect(routes.Application.overview());
         }
     }
-
-    static DynamicForm gameForm = DynamicForm.form();
 
     public static class LoginCredentials {
 
