@@ -1,5 +1,6 @@
 package models;
 
+import org.apache.commons.lang3.StringUtils;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -17,6 +18,7 @@ public class Player extends Model {
     public long id;
 
     @Constraints.Required
+    @Constraints.MinLength(1)
     @Column(unique = true)
     public String name;
 
@@ -44,6 +46,9 @@ public class Player extends Model {
     }
 
     public static Player getOrCreate(String name) {
+        if (StringUtils.isBlank(name)) {
+            throw new NullPointerException("Supplied name must not be null!");
+        }
         Player existingPlayer = byName(name);
         if (existingPlayer != null) {
             return existingPlayer;

@@ -2,6 +2,9 @@ package controllers;
 
 import models.Game;
 import models.Player;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Crypto;
@@ -58,21 +61,33 @@ public class Application extends Controller {
         String pointsLeftString = (String) filledForm.data().get("pointsLeft");
         String pointsRightString = (String) filledForm.data().get("pointsRight");
 
-        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
-            date = parser.parse(dateString);
+            date = DateUtils.parseDateStrictly(dateString, "yyyy-MM-dd");
         } catch (ParseException e) {
-            Logger.error(String.format("PARSE ERROR OF DOOM!"), e);
+            filledForm.reject("date", "Supplied date is not valid! Use the format 'yyyy-MM-dd'.");
         }
-        Player player1 = Player.getOrCreate(playerLeftName);
-        Player player2 = Player.getOrCreate(playerRightName);
-        int pointsLeft = Integer.parseInt(pointsLeftString.trim());
-        int pointsRight = Integer.parseInt(pointsRightString.trim());
+
+        if (StringUtils.isBlank(playerLeftName)) {
+            filledForm.reject("playerLeft", "Left player name must not be empty.");
+        }
+        if (StringUtils.isBlank(playerRightName)) {
+            filledForm.reject("playerRight", "Right player name must not be empty.");
+        }
+        if (!NumberUtils.isDigits(pointsLeftString)) {
+            filledForm.reject("pointsLeft", "Left points must be a valid number.");
+        }
+        if (!NumberUtils.isDigits(pointsRightString)) {
+            filledForm.reject("pointsRight", "Right points must be a valid number.");
+        }
 
         if(filledForm.hasErrors()) {
             return badRequest(overview.render(Player.all(), Game.all(), filledForm));
         } else {
+            Player player1 = Player.getOrCreate(playerLeftName);
+            Player player2 = Player.getOrCreate(playerRightName);
+            int pointsLeft = Integer.parseInt(pointsLeftString.trim());
+            int pointsRight = Integer.parseInt(pointsRightString.trim());
             Game.insert(date, player1, player2, pointsLeft, pointsRight);
             return redirect(routes.Application.overview());
         }
