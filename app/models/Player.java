@@ -7,12 +7,13 @@ import play.db.ebean.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
 public class Player extends Model {
-
-    public static final int STARTING_POINTS = 1000;
 
     @Id
     public long id;
@@ -22,19 +23,17 @@ public class Player extends Model {
     @Column(unique = true)
     public String name;
 
-    public int currentPoints;
+    @OneToMany(mappedBy = "playerLeft")
+    public List<Game> gamesOnLeft;
 
-    public int nbrGames;
-
-    public int wins;
-
-    public int losses;
+    @OneToMany(mappedBy = "playerRight")
+    public List<Game> gamesOnRight;
 
     @SuppressWarnings("unchecked")
     public static Finder<Long, Player> find = new Finder(Long.class, Player.class);
 
     public static List<Player> all() {
-        return find.where().orderBy("currentPoints desc").findList();
+        return find.where().orderBy("id").findList();
     }
 
     public static Player byId(Long id) {
@@ -55,27 +54,9 @@ public class Player extends Model {
         } else {
             Player newPlayer = new Player();
             newPlayer.name = name;
-            newPlayer.currentPoints = STARTING_POINTS;
-            newPlayer.nbrGames = 0;
-            newPlayer.wins = 0;
-            newPlayer.losses = 0;
             newPlayer.save();
             return newPlayer;
         }
-    }
-
-    public void addPoints(int points) {
-        currentPoints += points;
-        nbrGames++;
-        wins++;
-        this.save();
-    }
-
-    public void withdrawPoints(int points) {
-        currentPoints -= points;
-        nbrGames++;
-        losses++;
-        this.save();
     }
 
 }

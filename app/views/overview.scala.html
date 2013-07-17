@@ -7,54 +7,32 @@
         <tr>
             <th>Pos.</th>
             <th>Player</th>
-            <th>Points</th>
-            <th>Games</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>%</th>
         </tr>
         @for((player, index) <- players.zipWithIndex) {
             <tr>
                 <td>@{index + 1}</td>
                 <td>@player.name</td>
-                <td>@player.currentPoints</td>
-                <td>@player.nbrGames</td>
-                <td>@player.wins</td>
-                <td>@player.losses</td>
-                <td>@{100 * player.wins / player.nbrGames}%</td>
             </tr>
         }
     </table>
 
     <table>
         <tr>
-            <th>Id</th>
             <th>#</th>
+            <th>Id</th>
             <th>Date</th>
             <th>Player 1</th>
-            <th>Before</th>
-            <th>Stake</th>
-            <th>After</th>
             <th>Player 2</th>
-            <th>Before</th>
-            <th>Stake</th>
-            <th>After</th>
             <th>Result</th>
             <th>Winner</th>
         </tr>
         @for((game, index) <- allGames.zipWithIndex) {
             <tr>
-                <td>@game.id</td>
                 <td>@game.gameNbr</td>
+                <td>@game.id</td>
                 <td>@game.date.format("yyyy-MM-dd")</td>
                 <td>@game.playerLeft.name</td>
-                <td>@game.beforeLeft</td>
-                <td>@game.stakeLeft</td>
-                <td>@game.afterLeft</td>
                 <td>@game.playerRight.name</td>
-                <td>@game.beforeRight</td>
-                <td>@game.stakeRight</td>
-                <td>@game.afterRight</td>
                 <td>@game.pointsLeft - @game.pointsRight</td>
                 <td></td>
             </tr>

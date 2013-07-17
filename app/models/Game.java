@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -11,8 +12,6 @@ import java.util.List;
 
 @Entity
 public class Game extends Model {
-
-    public static final double STAKE_PER_GAME = 0.1;
 
     @Id
     public long id;
@@ -26,17 +25,9 @@ public class Game extends Model {
     @Constraints.Required
     public Player playerLeft;
 
-    public int beforeLeft;
-    public int stakeLeft;
-    public int afterLeft;
-
     @ManyToOne()
     @Constraints.Required
     public Player playerRight;
-
-    public int beforeRight;
-    public int stakeRight;
-    public int afterRight;
 
     @Constraints.Required
     public int pointsLeft;
@@ -48,11 +39,7 @@ public class Game extends Model {
     public static Finder<Long, Game> find = new Finder(Long.class, Game.class);
 
     public static List<Game> all() {
-        return find.where().orderBy("date").findList();
-    }
-
-    public static Game byId(Long id) {
-        return find.ref(id);
+        return find.where().orderBy("date, gameNbr").findList();
     }
 
     public static Game insert(Game game) {
@@ -63,39 +50,32 @@ public class Game extends Model {
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
         Game game = new Game();
         game.date = date;
-        game.gameNbr = getMaxGameNbr() + 1;
+        game.gameNbr = getMaxGameNbr(date) + 1;
         game.playerLeft = playerLeft;
         game.playerRight = playerRight;
         game.pointsLeft = pointsLeft;
         game.pointsRight = pointsRight;
 
-        game.beforeLeft = playerLeft.currentPoints;
-        game.stakeLeft = (int) (game.beforeLeft * STAKE_PER_GAME);
-
-        game.beforeRight = playerRight.currentPoints;
-        game.stakeRight = (int) (game.beforeRight * STAKE_PER_GAME);
-
-        if (pointsLeft > pointsRight) {
-            game.afterLeft = game.beforeLeft + game.stakeRight;
-            game.afterRight = game.beforeRight - game.stakeRight;
-            playerLeft.addPoints(game.stakeRight);
-            playerRight.withdrawPoints(game.stakeRight);
-        } else if (pointsRight > pointsLeft) {
-            game.afterLeft = game.beforeLeft - game.stakeLeft;
-            game.afterRight = game.beforeRight + game.stakeLeft;
-            playerLeft.withdrawPoints(game.stakeLeft);
-            playerRight.addPoints(game.stakeLeft);
-        } else {
-            game.afterLeft = game.beforeLeft;
-            game.afterRight = game.beforeRight;
-        }
-
         game.save();
+        recalculateGameNbrsFrom(game);
         return game;
     }
 
-    private static int getMaxGameNbr() {
-        List<Game> list = find.where().orderBy("gameNbr desc").setMaxRows(1).findList();
+    private static void recalculateGameNbrsFrom(Game game) {
+        List<Game> list = find.where()
+                .or(Expr.gt("date", game.date), Expr.ge("gameNbr", game.gameNbr))
+                .orderBy("date, gameNbr").findList();
+        int gameNbr = game.gameNbr;
+        for (Game currentGame : list) {
+            if (currentGame.id != game.id) {
+                currentGame.gameNbr = ++gameNbr;
+                currentGame.save();
+            }
+        }
+    }
+
+    private static int getMaxGameNbr(Date date) {
+        List<Game> list = find.where().eq("date", date).orderBy("gameNbr desc").setMaxRows(1).findList();
         if (list.isEmpty()) {
             return 0;
         } else {
