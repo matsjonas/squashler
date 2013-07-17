@@ -74,6 +74,9 @@ public class Application extends Controller {
         if (StringUtils.isBlank(playerRightName)) {
             gameForm.reject("playerRight", "Right player name must not be empty.");
         }
+        if (StringUtils.isNotBlank(playerLeftName) && playerLeftName.equals(playerRightName)) {
+            gameForm.reject("playerRight", "Right player name must not be same as player left.");
+        }
         if (!NumberUtils.isDigits(pointsLeftString)) {
             gameForm.reject("pointsLeft", "Left points must be a valid number.");
         }
