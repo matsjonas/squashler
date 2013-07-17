@@ -20,8 +20,8 @@ $ play run
 - [ ] Add a start/splash page
 - [ ] Allow sorting of games that where played on the same date
 - [ ] Make it so that a bad insert request redirects back to the overview url
-- [ ] Calculate and display current standings.
 
+- [x] Calculate and display current standings.
 - [x] Only store actual game and player data. (Don't store current standings)
 - [x] Support inserting of old games (i.e. recalculate all newer games' results)
 - [x] Do not allow registration of games where the two players are the same player (e.g. Adam vs. Adam)

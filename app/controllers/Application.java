@@ -11,6 +11,7 @@ import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import util.StandingsCalculator;
 import views.html.*;
 import play.Logger;
 
@@ -48,7 +49,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result overview() {
-        return ok(overview.render(Player.all(), Game.all(), DynamicForm.form()));
+        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), DynamicForm.form()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -85,7 +86,7 @@ public class Application extends Controller {
         }
 
         if(gameForm.hasErrors()) {
-            return badRequest(overview.render(Player.all(), Game.all(), gameForm));
+            return badRequest(overview.render(StandingsCalculator.create(Game.all(), Player.all()), gameForm));
         } else {
             Player player1 = Player.getOrCreate(playerLeftName);
             Player player2 = Player.getOrCreate(playerRightName);
