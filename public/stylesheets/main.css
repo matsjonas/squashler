@@ -1,0 +1,42 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+html {
+    background: url(../images/main_bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#login-background-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: sandybrown;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+#login-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+#login-container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#login-box {
+    text-align: center;
+    background-color: #FFF;
+    border-top: 10px solid orangered;
+    border-bottom: 10px solid orangered;
+    padding: 50px;
+}
