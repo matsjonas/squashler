@@ -43,15 +43,15 @@ public class StandingsCalculator {
             wrapper.rightPointsBefore = playerWrapperRight.currentPoints;
 
             wrapper.leftStake = (int) (wrapper.leftPointsBefore * STAKE_PER_GAME);
-            wrapper.rightStake = (int) (wrapper.leftPointsBefore * STAKE_PER_GAME);
+            wrapper.rightStake = (int) (wrapper.rightPointsBefore * STAKE_PER_GAME);
             if (wrapper.game.pointsLeft > wrapper.game.pointsRight) {
-                wrapper.leftPointsAfter = wrapper.leftPointsBefore + wrapper.leftStake;
+                wrapper.leftPointsAfter = wrapper.leftPointsBefore + wrapper.rightStake;
                 wrapper.rightPointsAfter = wrapper.rightPointsBefore - wrapper.rightStake;
                 playerWrapperLeft.wins++;
                 playerWrapperRight.losses++;
             } else if (wrapper.game.pointsLeft < wrapper.game.pointsRight) {
                 wrapper.leftPointsAfter = wrapper.leftPointsBefore - wrapper.leftStake;
-                wrapper.rightPointsAfter = wrapper.rightPointsBefore + wrapper.rightStake;
+                wrapper.rightPointsAfter = wrapper.rightPointsBefore + wrapper.leftStake;
                 playerWrapperLeft.losses++;
                 playerWrapperRight.wins++;
             } else {
