@@ -1,42 +1,21 @@
 html, body {
     height: 100%;
     margin: 0;
+    background-color: #097054;
 }
 
-html {
-    background: url(../images/main_bg.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-#login-background-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: sandybrown;
-    opacity: 0.4;
-    z-index: -1;
-}
-
-#login-wrapper {
-    display: table;
-    width: 100%;
+.container {
+    background-color: white;
     height: 100%;
+    padding: 10px;
 }
 
-#login-container {
-    display: table-cell;
-    vertical-align: middle;
+.login-container {
+    padding-top: 200px;
+    z-index: 200;
+    background: transparent;
 }
 
-#login-box {
-    text-align: center;
-    background-color: #FFF;
-    border-top: 10px solid orangered;
-    border-bottom: 10px solid orangered;
-    padding: 50px;
+.container.login-container {
+    background: inherit;
 }
