@@ -3,76 +3,91 @@
 
 @main("squashler") {
 
-    <table>
-        <tr>
-            <th>Pos.</th>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Games</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>%</th>
-        </tr>
-        @for((wrapper, index) <- calc.getPlayers.zipWithIndex) {
-            <tr>
-                <td>@{index + 1}</td>
-                <td>@wrapper.getPlayer().name</td>
-                <td>@wrapper.getCurrentPoints()</td>
-                <td>@wrapper.getNbrGames()</td>
-                <td>@wrapper.getWins()</td>
-                <td>@wrapper.getLosses()</td>
-                <td>@{100 * wrapper.getWins() / wrapper.getNbrGames()}</td>
-            </tr>
-        }
-    </table>
 
-    <table>
-        <tr>
-            <th>#</th>
-            <th>Id</th>
-            <th>Date</th>
-            <th>Player 1</th>
-            <th>Before</th>
-            <th>Stake</th>
-            <th>After</th>
-            <th>Player 2</th>
-            <th>Before</th>
-            <th>Stake</th>
-            <th>After</th>
-            <th>Result</th>
-            <th>Winner</th>
-        </tr>
-        @for((wrapper, index) <- calc.getGames.zipWithIndex) {
-            <tr>
-                <td>@wrapper.getGame().gameNbr</td>
-                <td>@wrapper.getGame().id</td>
-                <td>@wrapper.getGame().date.format("yyyy-MM-dd")</td>
-                <td>@wrapper.getGame().playerLeft.name</td>
-                <td>@wrapper.getLeftPointsBefore()</td>
-                <td>@wrapper.getLeftStake()</td>
-                <td>@wrapper.getLeftPointsAfter()</td>
-                <td>@wrapper.getGame().playerRight.name</td>
-                <td>@wrapper.getRightPointsBefore()</td>
-                <td>@wrapper.getRightStake()</td>
-                <td>@wrapper.getRightPointsAfter()</td>
-                <td>@wrapper.getGame().pointsLeft - @wrapper.getGame().pointsRight</td>
-                <td>@wrapper.getWinningPlayer().name</td>
-            </tr>
-        }
-    </table>
-
-    @if(gameForm.hasErrors) {
-        <div class="alert alert-error">
-            <strong>Unable to insert game!</strong>
+    <div class="panel">
+        <div class="panel-heading">
+            <h1 class="panel-title">Ranking</h1>
         </div>
-    }
-    <form action="@routes.Application.insert()" method="post">
-        <input type="text" name="date" placeholder="date" value="2013-06-27"/>
-        <input type="text" name="playerLeft" placeholder="player left" value=""/>
-        <input type="text" name="playerRight" placeholder="player right" value=""/>
-        <input type="text" name="pointsLeft" placeholder="points left" value=""/>
-        <input type="text" name="pointsRight" placeholder="points right" value=""/>
-        <input type="submit" name="insert" value="Insert"/>
-    </form>
+
+        <table class="table table-condensed table-striped table-hover">
+            <tr>
+                <th>Pos.</th>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Games</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>%</th>
+            </tr>
+            @for((wrapper, index) <- calc.getPlayers.zipWithIndex) {
+                <tr>
+                    <td>@{index + 1}</td>
+                    <td>@wrapper.getPlayer().name</td>
+                    <td>@wrapper.getCurrentPoints()</td>
+                    <td>@wrapper.getNbrGames()</td>
+                    <td>@wrapper.getWins()</td>
+                    <td>@wrapper.getLosses()</td>
+                    <td>@{100 * wrapper.getWins() / wrapper.getNbrGames()}</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h1 class="panel-title">Results</h1>
+        </div>
+
+        <table class="table table-condensed table-striped table-hover">
+            <tr>
+                <th>#</th>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Player 1</th>
+                <th>Before</th>
+                <th>Stake</th>
+                <th>After</th>
+                <th>Player 2</th>
+                <th>Before</th>
+                <th>Stake</th>
+                <th>After</th>
+                <th>Result</th>
+                <th>Winner</th>
+            </tr>
+            @for((wrapper, index) <- calc.getGames.zipWithIndex) {
+                <tr>
+                    <td>@wrapper.getGame().gameNbr</td>
+                    <td>@wrapper.getGame().id</td>
+                    <td>@wrapper.getGame().date.format("yyyy-MM-dd")</td>
+                    <td>@wrapper.getGame().playerLeft.name</td>
+                    <td>@wrapper.getLeftPointsBefore()</td>
+                    <td>@wrapper.getLeftStake()</td>
+                    <td>@wrapper.getLeftPointsAfter()</td>
+                    <td>@wrapper.getGame().playerRight.name</td>
+                    <td>@wrapper.getRightPointsBefore()</td>
+                    <td>@wrapper.getRightStake()</td>
+                    <td>@wrapper.getRightPointsAfter()</td>
+                    <td>@wrapper.getGame().pointsLeft - @wrapper.getGame().pointsRight</td>
+                    <td>@wrapper.getWinningPlayer().name</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div>
+        @if(gameForm.hasErrors) {
+            <div class="alert alert-error">
+                <strong>Unable to insert game!</strong>
+            </div>
+        }
+        <form action="@routes.Application.insert()" method="post">
+            <input type="text" name="date" placeholder="date" value="2013-06-27"/>
+            <input type="text" name="playerLeft" placeholder="player left" value=""/>
+            <input type="text" name="playerRight" placeholder="player right" value=""/>
+            <input type="text" name="pointsLeft" placeholder="points left" value=""/>
+            <input type="text" name="pointsRight" placeholder="points right" value=""/>
+            <input type="submit" name="insert" value="Insert"/>
+        </form>
+    </div>
 
 }
