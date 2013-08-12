@@ -19,6 +19,16 @@
     </head>
     <body>
         <div class="container">
+
+            <div class="navbar navbar-inverse">
+                <span class="navbar-brand">Welcome to Squashler!</span>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Overview</a></li>
+                  </ul>
+                <a href="/logout" class="btn btn-default navbar-btn pull-right">Logout</a>
+                <p class="navbar-text pull-right">Signed in as <em>whoever</em></p>
+            </div>
+
             @content
         </div>
     </body>
