@@ -3,31 +3,6 @@
 
 @main("squashler") {
 
-    <script type="text/javascript">
-
-        $(function() {
-            $('input.player-typeahead').typeahead({
-                name: 'accounts',
-                remote: {
-                    url: 'players/%QUERY',
-                    rateLimitWait: 200,
-                    filter: function(parsedResponse) {
-                        var datums = [];
-                        for (var i = 0 ; i < parsedResponse.result.length ; i++) {
-                            var datum = {
-                                value: parsedResponse.result[i ].name,
-                                tokens: [parsedResponse.result[i ].name]
-                            };
-                            datums.push(datum);
-                        }
-                        return datums;
-                    }
-                }
-            });
-        });
-
-    </script>
-
     <div class="panel">
         <div class="panel-heading">
             <h1 class="panel-title">Ranking</h1>
