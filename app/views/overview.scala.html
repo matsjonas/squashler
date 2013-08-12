@@ -104,13 +104,34 @@
                 <strong>Unable to insert game!</strong>
             </div>
         }
-        <form action="@routes.Application.insert()" method="post">
-            <input type="text" name="date" placeholder="date" value="2013-06-27"/>
-            <input type="text" name="playerLeft" placeholder="player left" value="" class="player-typeahead"/>
-            <input type="text" name="playerRight" placeholder="player right" value="" class="player-typeahead"/>
-            <input type="text" name="pointsLeft" placeholder="points left" value=""/>
-            <input type="text" name="pointsRight" placeholder="points right" value=""/>
-            <input type="submit" name="insert" value="Insert"/>
+        <form class="form-horizontal" action="@routes.Application.insert()" method="post">
+            <div class="form-group">
+                <label for="date" class="col-lg-1 control-label">Date</label>
+                <div class="col-lg-2">
+                    <input type="text" id="date" name="date" placeholder="date" value="2013-06-27" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="playerLeft" class="col-lg-1 control-label">Players</label>
+                <div class="col-lg-2">
+                    <input type="text" id="playerLeft" name="playerLeft" placeholder="player left" value="" class="form-control player-typeahead"/>
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" id="playerRight" name="playerRight" placeholder="player right" value="" class="form-control player-typeahead"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pointsLeft" class="col-lg-1 control-label">Points</label>
+                <div class="col-lg-2">
+                    <input type="text" id="pointsLeft" name="pointsLeft" placeholder="points left" value="" class="form-control"/>
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" id="pointsRight" name="pointsRight" placeholder="points right" value="" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-lg-2 col-lg-offset-1">
+                <input type="submit" name="insert" value="Insert" class="btn btn-primary"/>
+            </div>
         </form>
     </div>
 
