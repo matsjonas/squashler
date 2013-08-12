@@ -5,9 +5,12 @@ import models.Player;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Crypto;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -16,8 +19,9 @@ import views.html.*;
 import play.Logger;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static play.data.Form.form;
 
@@ -95,6 +99,22 @@ public class Application extends Controller {
             Game.insert(date, player1, player2, pointsLeft, pointsRight);
             return redirect(routes.Application.overview());
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result players(String query) {
+        ObjectNode result = Json.newObject();
+        List<Player> players = Player.search(query);
+
+        ArrayNode playersAsJson = result.putArray("result");
+
+        for (Player player : players) {
+            ObjectNode json = Json.newObject();
+            json.put("name", player.name);
+            playersAsJson.add(json);
+        }
+
+        return ok(result);
     }
 
     public static class LoginCredentials {

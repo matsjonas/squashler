@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -42,6 +40,10 @@ public class Player extends Model {
 
     public static Player byName(String name) {
         return find.where().eq("name", name).orderBy("name").findUnique();
+    }
+
+    public static List<Player> search(String query) {
+        return find.where().ilike("name", String.format("%%%s%%", query)).findList();
     }
 
     public static Player getOrCreate(String name) {

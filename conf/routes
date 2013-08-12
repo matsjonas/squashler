@@ -9,6 +9,7 @@ POST     /login                      controllers.Application.authenticate()
 GET      /logout                     controllers.Application.logout()
 GET      /overview                   controllers.Application.overview()
 POST     /insert                     controllers.Application.insert()
+GET      /players/:q                 controllers.Application.players(q: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET      /assets/*file               controllers.Assets.at(path="/public", file)
