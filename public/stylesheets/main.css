@@ -19,3 +19,13 @@ html, body {
 .container.login-container {
     background: inherit;
 }
+
+table tbody>tr>th.min-width,
+table tbody>tr>td.min-width {
+    width: 1px;
+    white-space: nowrap;
+}
+
+.table-xs-buttons tbody>tr>td {
+    line-height: 26px;
+}

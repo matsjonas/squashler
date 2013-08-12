@@ -47,6 +47,10 @@ public class Game extends Model {
         return game;
     }
 
+    public static void remove(Long id) {
+        find.byId(id).delete();
+    }
+
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
         Game game = new Game();
         game.date = date;

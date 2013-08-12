@@ -86,7 +86,7 @@
             <h1 class="panel-title">Results</h1>
         </div>
 
-        <table class="table table-condensed table-striped table-hover">
+        <table class="table table-condensed table-striped table-hover table-xs-buttons">
             <tr>
                 <th>#</th>
                 <th>Id</th>
@@ -101,6 +101,7 @@
                 <th>After</th>
                 <th>Result</th>
                 <th>Winner</th>
+                <th class="min-width">&nbsp</th>
             </tr>
             @for((wrapper, index) <- calc.getGames.zipWithIndex) {
                 <tr>
@@ -117,6 +118,11 @@
                     <td>@wrapper.getRightPointsAfter()</td>
                     <td>@wrapper.getGame().pointsLeft - @wrapper.getGame().pointsRight</td>
                     <td>@wrapper.getWinningPlayer().name</td>
+                    <td class="min-width">
+                        <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
+                            <input type="submit" class="btn btn-xs btn-danger" value="Remove"/>
+                        </form>
+                    </td>
                 </tr>
             }
         </table>

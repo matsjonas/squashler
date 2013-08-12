@@ -117,6 +117,11 @@ public class Application extends Controller {
         return ok(result);
     }
 
+    public static Result removeGame(Long id) {
+        Game.remove(id);
+        return redirect(routes.Application.overview());
+    }
+
     public static class LoginCredentials {
 
         public String username;
