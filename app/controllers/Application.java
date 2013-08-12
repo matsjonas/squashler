@@ -60,11 +60,11 @@ public class Application extends Controller {
     public static Result insert() {
 
         DynamicForm gameForm = DynamicForm.form().bindFromRequest();
-        String dateString = (String) gameForm.data().get("date");
-        String playerLeftName = (String) gameForm.data().get("playerLeft");
-        String playerRightName = (String) gameForm.data().get("playerRight");
-        String pointsLeftString = (String) gameForm.data().get("pointsLeft");
-        String pointsRightString = (String) gameForm.data().get("pointsRight");
+        String dateString = gameForm.data().get("date");
+        String playerLeftName = gameForm.data().get("playerLeft");
+        String playerRightName = gameForm.data().get("playerRight");
+        String pointsLeftString = gameForm.data().get("pointsLeft");
+        String pointsRightString = gameForm.data().get("pointsRight");
 
         Date date = null;
         try {
