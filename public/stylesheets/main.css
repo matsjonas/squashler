@@ -20,6 +20,20 @@ html, body {
     background: inherit;
 }
 
+.site-title {
+    text-align: right;
+}
+
+.site-title h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 100px;
+    text-shadow: 0 0 10px #CCC;
+}
+
+.site-title p {
+    font-size: 14px;
+}
+
 table tbody>tr>th.min-width,
 table tbody>tr>td.min-width {
     width: 1px;

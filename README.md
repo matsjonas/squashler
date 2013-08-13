@@ -16,10 +16,10 @@ $ play run
 ## TODO:
 
 - [ ] Real user management
-- [ ] Add a start/splash page
 - [ ] Allow sorting of games that where played on the same date
 - [ ] Make it so that a bad insert request redirects back to the overview url
 
+- [x] Add a start/splash page
 - [X] Styling
 - [x] Calculate and display current standings.
 - [x] Only store actual game and player data. (Don't store current standings)
