@@ -20,8 +20,8 @@ public class StandingsCalculator {
     }
 
     private StandingsCalculator(List<Game> games, List<Player> players) {
-        this.games = new ArrayList<GameWrapper>();
-        this.players = new ArrayList<PlayerWrapper>();
+        this.games = new ArrayList<>();
+        this.players = new ArrayList<>();
         for (Game game : games) {
             this.games.add(new GameWrapper(game));
         }
@@ -32,36 +32,40 @@ public class StandingsCalculator {
     }
 
     private void calculateStandings() {
-        for (int i = 0; i < games.size(); i++) {
-            GameWrapper wrapper = games.get(i);
-
-            Player playerLeft = wrapper.game.playerLeft;
-            Player playerRight = wrapper.game.playerRight;
+        for (GameWrapper gameWrapper : games) {
+            Player playerLeft = gameWrapper.game.playerLeft;
+            Player playerRight = gameWrapper.game.playerRight;
             PlayerWrapper playerWrapperLeft = getPlayerWrapper(playerLeft);
             PlayerWrapper playerWrapperRight = getPlayerWrapper(playerRight);
-            wrapper.leftPointsBefore = playerWrapperLeft.currentPoints;
-            wrapper.rightPointsBefore = playerWrapperRight.currentPoints;
+            gameWrapper.leftPointsBefore = playerWrapperLeft.currentPoints;
+            gameWrapper.rightPointsBefore = playerWrapperRight.currentPoints;
 
-            wrapper.leftStake = (int) (wrapper.leftPointsBefore * STAKE_PER_GAME);
-            wrapper.rightStake = (int) (wrapper.rightPointsBefore * STAKE_PER_GAME);
-            if (wrapper.game.pointsLeft > wrapper.game.pointsRight) {
-                wrapper.leftPointsAfter = wrapper.leftPointsBefore + wrapper.rightStake;
-                wrapper.rightPointsAfter = wrapper.rightPointsBefore - wrapper.rightStake;
+            gameWrapper.leftStake = (int) (gameWrapper.leftPointsBefore * STAKE_PER_GAME);
+            gameWrapper.rightStake = (int) (gameWrapper.rightPointsBefore * STAKE_PER_GAME);
+            if (gameWrapper.game.pointsLeft > gameWrapper.game.pointsRight) {
+                gameWrapper.leftPointsAfter = gameWrapper.leftPointsBefore + gameWrapper.rightStake;
+                gameWrapper.rightPointsAfter = gameWrapper.rightPointsBefore - gameWrapper.rightStake;
                 playerWrapperLeft.wins++;
                 playerWrapperRight.losses++;
-            } else if (wrapper.game.pointsLeft < wrapper.game.pointsRight) {
-                wrapper.leftPointsAfter = wrapper.leftPointsBefore - wrapper.leftStake;
-                wrapper.rightPointsAfter = wrapper.rightPointsBefore + wrapper.leftStake;
+            } else if (gameWrapper.game.pointsLeft < gameWrapper.game.pointsRight) {
+                gameWrapper.leftPointsAfter = gameWrapper.leftPointsBefore - gameWrapper.leftStake;
+                gameWrapper.rightPointsAfter = gameWrapper.rightPointsBefore + gameWrapper.leftStake;
                 playerWrapperLeft.losses++;
                 playerWrapperRight.wins++;
             } else {
-                wrapper.leftPointsAfter = wrapper.leftPointsBefore;
-                wrapper.rightPointsAfter = wrapper.rightPointsBefore;
+                gameWrapper.leftPointsAfter = gameWrapper.leftPointsBefore;
+                gameWrapper.rightPointsAfter = gameWrapper.rightPointsBefore;
             }
             playerWrapperLeft.nbrGames++;
             playerWrapperRight.nbrGames++;
-            playerWrapperLeft.currentPoints = wrapper.leftPointsAfter;
-            playerWrapperRight.currentPoints = wrapper.rightPointsAfter;
+            playerWrapperLeft.currentPoints = gameWrapper.leftPointsAfter;
+            playerWrapperRight.currentPoints = gameWrapper.rightPointsAfter;
+        }
+        for (Iterator<PlayerWrapper> iterator = players.iterator(); iterator.hasNext(); ) {
+            PlayerWrapper playerWrapper = iterator.next();
+            if (playerWrapper.getNbrGames() == 0) {
+                iterator.remove();
+            }
         }
     }
 
