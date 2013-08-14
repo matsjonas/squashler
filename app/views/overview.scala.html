@@ -116,7 +116,7 @@
                     <td>@wrapper.getRightStake()</td>
                     <td>@wrapper.getRightPointsAfter()</td>
                     <td>@wrapper.getGame().pointsLeft - @wrapper.getGame().pointsRight</td>
-                    <td>@wrapper.getWinningPlayer().name</td>
+                    <td>@if(wrapper.getWinningPlayer() != null) { @wrapper.getWinningPlayer().name }</td>
                     <td class="min-width">
                         <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
                             <input type="submit" class="btn btn-xs btn-danger" value="Remove"/>
