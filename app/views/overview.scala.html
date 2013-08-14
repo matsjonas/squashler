@@ -91,14 +91,8 @@
                 <th>Id</th>
                 <th>Date</th>
                 <th>Player 1</th>
-                <th>Before</th>
-                <th>Stake</th>
-                <th>After</th>
+                <th colspan="3" style="text-align: center">Result</th>
                 <th>Player 2</th>
-                <th>Before</th>
-                <th>Stake</th>
-                <th>After</th>
-                <th>Result</th>
                 <th>Winner</th>
                 <th class="min-width">&nbsp</th>
             </tr>
@@ -108,14 +102,10 @@
                     <td>@wrapper.getGame().id</td>
                     <td>@wrapper.getGame().date.format("yyyy-MM-dd")</td>
                     <td>@wrapper.getGame().playerLeft.name</td>
-                    <td>@wrapper.getLeftPointsBefore()</td>
-                    <td>@wrapper.getLeftStake()</td>
-                    <td>@wrapper.getLeftPointsAfter()</td>
+                    <td style="text-align: right;">@wrapper.getGame().pointsLeft</td>
+                    <td class="min-width">-</td>
+                    <td style="text-align: left;">@wrapper.getGame().pointsRight</td>
                     <td>@wrapper.getGame().playerRight.name</td>
-                    <td>@wrapper.getRightPointsBefore()</td>
-                    <td>@wrapper.getRightStake()</td>
-                    <td>@wrapper.getRightPointsAfter()</td>
-                    <td>@wrapper.getGame().pointsLeft - @wrapper.getGame().pointsRight</td>
                     <td>@if(wrapper.getWinningPlayer() != null) { @wrapper.getWinningPlayer().name }</td>
                     <td class="min-width">
                         <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
