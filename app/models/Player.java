@@ -46,6 +46,7 @@ public class Player extends Model {
         if (StringUtils.isBlank(name)) {
             throw new NullPointerException("Supplied name must not be null!");
         }
+        name = String.format("%s%s", name.substring(0, 1).toUpperCase(), name.substring(1));
         Player existingPlayer = byName(name);
         if (existingPlayer != null) {
             return existingPlayer;
