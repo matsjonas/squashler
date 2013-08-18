@@ -128,6 +128,10 @@ public class Application extends Controller {
         return redirect(routes.Application.overview());
     }
 
+    public static Result players() {
+        return ok(players.render(Player.all()));
+    }
+
     public static class LoginCredentials {
 
         public String username;

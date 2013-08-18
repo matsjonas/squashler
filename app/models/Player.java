@@ -31,7 +31,7 @@ public class Player extends Model {
     public static Finder<Long, Player> find = new Finder(Long.class, Player.class);
 
     public static List<Player> all() {
-        return find.where().orderBy("id").findList();
+        return find.where().orderBy("name").findList();
     }
 
     public static Player byName(String name) {

@@ -1,0 +1,24 @@
+@(players: List[Player])
+
+@main("players") {
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h1 class="panel-title">Players</h1>
+        </div>
+
+        <table class="table table-condensed table-striped table-hover">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            @for(player <- players) {
+                <tr>
+                    <td>@player.id</td>
+                    <td>@player.name</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+}
