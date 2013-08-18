@@ -4,6 +4,7 @@ import models.Game;
 import models.Player;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -19,9 +20,7 @@ import views.html.*;
 import play.Logger;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static play.data.Form.form;
 
@@ -53,7 +52,14 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result overview() {
-        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), DynamicForm.form()));
+        DynamicForm form = DynamicForm.form();
+
+        Map<String, String> defaults = new HashMap<String, String>();
+        defaults.put("date", DateFormatUtils.format(new Date(), "yyyy-MM-dd"));
+        defaults.put("pointsLeft", "11");
+        form = form.bind(defaults);
+
+        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form));
     }
 
     @Security.Authenticated(Secured.class)
