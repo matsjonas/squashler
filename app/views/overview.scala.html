@@ -8,7 +8,6 @@
                 <div class="panel-heading">
                     <h1 class="panel-title">Register</h1>
                 </div>
-
                 @newGameForm(gameForm)
             </div>
         </div>
@@ -24,9 +23,18 @@
                         <th>Pos.</th>
                         <th>Player</th>
                         <th>Points</th>
-                        <th>Games</th>
-                        <th>Wins</th>
-                        <th>Losses</th>
+                        <th>
+                            <span class="hidden-xs">Played</span>
+                            <span class="visible-xs">P</span>
+                        </th>
+                        <th>
+                            <span class="hidden-xs">Wins</span>
+                            <span class="visible-xs">W</span>
+                        </th>
+                        <th>
+                            <span class="hidden-xs">Losses</span>
+                            <span class="visible-xs">L</span>
+                        </th>
                         <th>%</th>
                     </tr>
                     @for((wrapper, index) <- calc.getPlayers.zipWithIndex) {
@@ -52,32 +60,42 @@
 
         <table class="table table-condensed table-striped table-hover table-xs-buttons">
             <tr>
-                <th>#</th>
-                <th>Id</th>
+                <th class="hidden-xs">#</th>
+                <th class="hidden-xs">Id</th>
                 <th>Date</th>
-                <th>Player 1</th>
-                <th colspan="3" style="text-align: center">Result</th>
-                <th>Player 2</th>
-                <th>Winner</th>
+                <th>Left</th>
+                <th>Right</th>
+                <th>Result</th>
+                <th class="text-right hidden-xs">Before</th>
+                <th class="text-right hidden-xs">Stake</th>
+                <th class="text-right hidden-xs">After</th>
+                <th class="text-right hidden-xs">Before</th>
+                <th class="text-right hidden-xs">Stake</th>
+                <th class="text-right hidden-xs">After</th>
                 <th class="min-width">&nbsp</th>
             </tr>
-            @for((wrapper, index) <- calc.getGames.zipWithIndex) {
+            @for(wrapper <- calc.getGames) {
+                @defining(wrapper.getGame) { game =>
                 <tr>
-                    <td>@wrapper.getGame().gameNbr</td>
-                    <td>@wrapper.getGame().id</td>
-                    <td>@wrapper.getGame().date.format("yyyy-MM-dd")</td>
-                    <td>@wrapper.getGame().playerLeft.name</td>
-                    <td style="text-align: right;">@wrapper.getGame().pointsLeft</td>
-                    <td class="min-width">-</td>
-                    <td style="text-align: left;">@wrapper.getGame().pointsRight</td>
-                    <td>@wrapper.getGame().playerRight.name</td>
-                    <td>@if(wrapper.getWinningPlayer() != null) { @wrapper.getWinningPlayer().name }</td>
+                    <td class="hidden-xs">@game.gameNbr</td>
+                    <td class="hidden-xs">@game.id</td>
+                    <td>@game.date.format("yyyy-MM-dd")</td>
+                    <td>@game.playerLeft.name</td>
+                    <td>@game.playerRight.name</td>
+                    <td>@game.pointsLeft - @game.pointsRight</td>
+                    <td class="text-right hidden-xs">@wrapper.getLeftPointsBefore()</td>
+                    <td class="text-right hidden-xs">@wrapper.getLeftStake()</td>
+                    <td class="text-right hidden-xs">@wrapper.getLeftPointsAfter()</td>
+                    <td class="text-right hidden-xs">@wrapper.getRightPointsBefore()</td>
+                    <td class="text-right hidden-xs">@wrapper.getRightStake()</td>
+                    <td class="text-right hidden-xs">@wrapper.getRightPointsAfter()</td>
                     <td class="min-width">
                         <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
                             <input type="submit" class="btn btn-xs btn-danger" value="Remove"/>
                         </form>
                     </td>
                 </tr>
+                }
             }
         </table>
     </div>

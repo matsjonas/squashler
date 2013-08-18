@@ -41,6 +41,20 @@ table tbody>tr>td.min-width {
     line-height: 26px;
 }
 
+/* Util classes */
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
 /* Add missing paddings in Bootstrap RC2 */
 
 .panel {
