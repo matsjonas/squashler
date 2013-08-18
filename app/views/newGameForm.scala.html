@@ -6,7 +6,7 @@
         Unable to insert game!
         @for(errList <- gameForm.errors()) {
             @for(err <- errList._2) {
-                <br/> @err.message()
+                <br/> <span class="glyphicon glyphicon-warning-sign"></span> @err.message()
             }
         }
     </div>
