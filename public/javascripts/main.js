@@ -5,7 +5,7 @@ $(function() {
     $('input.player-typeahead').typeahead({
         name: 'accounts',
         remote: {
-            url: 'players/%QUERY',
+            url: 'player/%QUERY',
             rateLimitWait: 200,
             filter: function(parsedResponse) {
                 var datums = [];

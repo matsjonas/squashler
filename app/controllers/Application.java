@@ -108,7 +108,7 @@ public class Application extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result players(String query) {
+    public static Result player(String query) {
         ObjectNode result = Json.newObject();
         List<Player> players = Player.search(query);
 
