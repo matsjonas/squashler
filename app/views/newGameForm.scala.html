@@ -14,32 +14,32 @@
 
 <form class="form-horizontal" action="@routes.Application.insert()" method="post">
     <div class="form-group @if(gameForm.field("date").hasErrors) { has-error }">
-        <label for="date" class="col-lg-2 control-label">Date</label>
-        <div class="col-lg-10">
+        <label for="date" class="col-xs-2 control-label">Date</label>
+        <div class="col-xs-10">
             <input type="text" id="date" name="date" placeholder="date" value="@gameForm.get("date")" class="form-control" autofocus/>
         </div>
     </div>
     <div class="form-group @if(gameForm.field("playerLeft").hasErrors || gameForm.field("playerRight").hasErrors) { has-error }">
-        <label for="playerLeft" class="col-lg-2 control-label">Players</label>
-        <div class="col-lg-5">
+        <label for="playerLeft" class="col-xs-2 control-label">Players</label>
+        <div class="col-xs-5">
             <input type="text" id="playerLeft" name="playerLeft" placeholder="player left" value="@gameForm.get("playerLeft")" class="form-control player-typeahead"/>
         </div>
-        <div class="col-lg-5">
+        <div class="col-xs-5">
             <input type="text" id="playerRight" name="playerRight" placeholder="player right" value="@gameForm.get("playerRight")" class="form-control player-typeahead"/>
         </div>
     </div>
     <div class="form-group @if(gameForm.field("pointsLeft").hasErrors || gameForm.field("pointsRight").hasErrors) { has-error }">
-        <label for="pointsLeft" class="col-lg-2 control-label">Points</label>
-        <div class="col-lg-5">
+        <label for="pointsLeft" class="col-xs-2 control-label">Points</label>
+        <div class="col-xs-5">
             <input type="text" id="pointsLeft" name="pointsLeft" placeholder="points left" value="@gameForm.get("pointsLeft")" class="form-control"/>
         </div>
-        <div class="col-lg-5">
+        <div class="col-xs-5">
             <input type="text" id="pointsRight" name="pointsRight" placeholder="points right" value="@gameForm.get("pointsRight")" class="form-control"/>
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-2 col-sm-offset-2">
-            <input type="submit" name="insert" value="Submit" class="btn btn-primary"/>
+        <div class="col-xs-12 col-sm-5 col-sm-offset-7 col-lg-5 col-lg-offset-7">
+            <input type="submit" name="insert" value="Submit" class="btn btn-block btn-primary"/>
         </div>
     </div>
 </form>
