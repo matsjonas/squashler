@@ -65,7 +65,7 @@
                 <th>Date</th>
                 <th>Left</th>
                 <th>Right</th>
-                <th>Result</th>
+                <th colspan="3" class="text-center">Result</th>
                 <th class="text-right hidden-xs">Before</th>
                 <th class="text-right hidden-xs">Stake</th>
                 <th class="text-right hidden-xs">After</th>
@@ -82,7 +82,9 @@
                     <td>@game.date.format("yyyy-MM-dd")</td>
                     <td>@game.playerLeft.name</td>
                     <td>@game.playerRight.name</td>
-                    <td>@game.pointsLeft - @game.pointsRight</td>
+                    <td class="text-right">@game.pointsLeft</td>
+                    <td class="text-center">-</td>
+                    <td class="text-left">@game.pointsRight</td>
                     <td class="text-right hidden-xs">@wrapper.getLeftPointsBefore()</td>
                     <td class="text-right hidden-xs">@wrapper.getLeftStake()</td>
                     <td class="text-right hidden-xs">@wrapper.getLeftPointsAfter()</td>
