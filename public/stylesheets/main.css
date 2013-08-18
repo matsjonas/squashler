@@ -64,3 +64,7 @@ table tbody>tr>td.min-width {
 .panel .panel-heading {
     margin: -15px -15px 15px;
 }
+
+.navbar {
+    padding-right: 15px;
+}
