@@ -82,7 +82,7 @@ public class StandingsCalculator {
         Collections.sort(games, new Comparator<GameWrapper>() {
             @Override
             public int compare(GameWrapper o1, GameWrapper o2) {
-                return Integer.compare(o1.game.gameNbr, o2.game.gameNbr);
+                return -Integer.compare(o1.game.gameNbr, o2.game.gameNbr);
             }
         });
         return games;
