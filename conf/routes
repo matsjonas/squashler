@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# Standard pages
 GET      /                           controllers.Application.index()
 GET      /login                      controllers.Application.login()
 POST     /login                      controllers.Application.authenticate()
@@ -16,5 +16,19 @@ POST     /remove-game/:id            controllers.Application.removeGame(id: Long
 POST     /remove-player/:id          controllers.Application.removePlayer(id: Long)
 GET      /charts                     controllers.Application.charts()
 
+# JSON API access points
+
+GET           /rest/player/:id        controllers.RestfulAPI.player(id: Long)
+POST          /rest/player/           controllers.RestfulAPI.createPlayer()
+PUT           /rest/player/:id        controllers.RestfulAPI.updatePlayer(id: Long)
+DELETE        /rest/player/:id        controllers.RestfulAPI.deletePlayer(id: Long)
+
+GET           /rest/game/:id          controllers.RestfulAPI.game(id: Long)
+POST          /rest/game/             controllers.RestfulAPI.createGame()
+PUT           /rest/game/:id          controllers.RestfulAPI.updateGame(id: Long)
+DELETE        /rest/game/:id          controllers.RestfulAPI.deleteGame(id: Long)
+
+GET           /rest/games             controllers.RestfulAPI.games()
+
 # Map static resources from the /public folder to the /assets URL path
-GET      /assets/*file               controllers.Assets.at(path="/public", file)
+GET           /assets/*file           controllers.Assets.at(path="/public", file)
