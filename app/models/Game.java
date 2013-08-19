@@ -48,7 +48,14 @@ public class Game extends Model {
     }
 
     public static void remove(Long id) {
-        find.byId(id).delete();
+        Game gameToRemove = find.byId(id);
+        int oldIndex = gameToRemove.gameNbr;
+        gameToRemove.delete();
+        List<Game> games = find.where().gt("gameNbr", oldIndex).findList();
+        for (Game game : games) {
+            game.gameNbr--;
+            game.save();
+        }
     }
 
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
