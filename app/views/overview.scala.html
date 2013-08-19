@@ -60,8 +60,6 @@
 
         <table class="table table-condensed table-striped table-hover table-xs-buttons">
             <tr>
-                <th class="hidden-xs">#</th>
-                <th class="hidden-xs">Id</th>
                 <th>Date</th>
                 <th>Left</th>
                 <th>Right</th>
@@ -77,8 +75,6 @@
             @for(wrapper <- calc.getGames) {
                 @defining(wrapper.getGame) { game =>
                 <tr>
-                    <td class="hidden-xs">@game.gameNbr</td>
-                    <td class="hidden-xs">@game.id</td>
                     <td>@game.date.format("yyyy-MM-dd")</td>
                     <td>@game.playerLeft.name</td>
                     <td>@game.playerRight.name</td>
