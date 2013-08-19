@@ -25,22 +25,18 @@ create sequence game_seq;
 
 create sequence player_seq;
 
-alter table game add constraint fk_game_playerLeft_1 foreign key (player_left_id) references player (id) on delete restrict on update restrict;
+alter table game add constraint fk_game_playerLeft_1 foreign key (player_left_id) references player (id);
 create index ix_game_playerLeft_1 on game (player_left_id);
-alter table game add constraint fk_game_playerRight_2 foreign key (player_right_id) references player (id) on delete restrict on update restrict;
+alter table game add constraint fk_game_playerRight_2 foreign key (player_right_id) references player (id);
 create index ix_game_playerRight_2 on game (player_right_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists game cascade;
 
-drop table if exists game;
-
-drop table if exists player;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists player cascade;
 
 drop sequence if exists game_seq;
 
