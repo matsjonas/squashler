@@ -8,7 +8,9 @@
                 <div class="panel-heading">
                     <h1 class="panel-title">Register</h1>
                 </div>
-                @newGameForm(gameForm)
+                <div class="panel-body">
+                    @newGameForm(gameForm)
+                </div>
             </div>
         </div>
 
@@ -18,37 +20,39 @@
                     <h1 class="panel-title">Ranking</h1>
                 </div>
 
-                <table class="table table-condensed table-striped table-hover">
-                    <tr>
-                        <th>Pos.</th>
-                        <th>Player</th>
-                        <th>Points</th>
-                        <th>
-                            <span class="hidden-xs">Played</span>
-                            <span class="visible-xs">P</span>
-                        </th>
-                        <th>
-                            <span class="hidden-xs">Wins</span>
-                            <span class="visible-xs">W</span>
-                        </th>
-                        <th>
-                            <span class="hidden-xs">Losses</span>
-                            <span class="visible-xs">L</span>
-                        </th>
-                        <th>%</th>
-                    </tr>
-                    @for((wrapper, index) <- calc.getPlayers.zipWithIndex) {
+                <div class="panel-body">
+                    <table class="table table-condensed table-striped table-hover">
                         <tr>
-                            <td>@{index + 1}</td>
-                            <td>@wrapper.getPlayer().name</td>
-                            <td>@wrapper.getCurrentPoints()</td>
-                            <td>@wrapper.getNbrGames()</td>
-                            <td>@wrapper.getWins()</td>
-                            <td>@wrapper.getLosses()</td>
-                            <td>@{100 * wrapper.getWins() / wrapper.getNbrGames()}</td>
+                            <th>Pos.</th>
+                            <th>Player</th>
+                            <th>Points</th>
+                            <th>
+                                <span class="hidden-xs">Played</span>
+                                <span class="visible-xs">P</span>
+                            </th>
+                            <th>
+                                <span class="hidden-xs">Wins</span>
+                                <span class="visible-xs">W</span>
+                            </th>
+                            <th>
+                                <span class="hidden-xs">Losses</span>
+                                <span class="visible-xs">L</span>
+                            </th>
+                            <th>%</th>
                         </tr>
-                    }
-                </table>
+                        @for((wrapper, index) <- calc.getPlayers.zipWithIndex) {
+                            <tr>
+                                <td>@{index + 1}</td>
+                                <td>@wrapper.getPlayer().name</td>
+                                <td>@wrapper.getCurrentPoints()</td>
+                                <td>@wrapper.getNbrGames()</td>
+                                <td>@wrapper.getWins()</td>
+                                <td>@wrapper.getLosses()</td>
+                                <td>@{100 * wrapper.getWins() / wrapper.getNbrGames()}</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -58,44 +62,46 @@
             <h1 class="panel-title">Results</h1>
         </div>
 
-        <table class="table table-condensed table-striped table-hover table-xs-buttons">
-            <tr>
-                <th>Date</th>
-                <th>Left</th>
-                <th>Right</th>
-                <th colspan="3" class="text-center">Result</th>
-                <th class="text-right hidden-xs">Before</th>
-                <th class="text-right hidden-xs">Stake</th>
-                <th class="text-right hidden-xs">After</th>
-                <th class="text-right hidden-xs">Before</th>
-                <th class="text-right hidden-xs">Stake</th>
-                <th class="text-right hidden-xs">After</th>
-                <th class="min-width">&nbsp</th>
-            </tr>
-            @for(wrapper <- calc.getGames) {
-                @defining(wrapper.getGame) { game =>
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-hover table-xs-buttons">
                 <tr>
-                    <td>@game.date.format("yyyy-MM-dd")</td>
-                    <td>@game.playerLeft.name</td>
-                    <td>@game.playerRight.name</td>
-                    <td class="text-right">@game.pointsLeft</td>
-                    <td class="text-center">-</td>
-                    <td class="text-left">@game.pointsRight</td>
-                    <td class="text-right hidden-xs">@wrapper.getLeftPointsBefore()</td>
-                    <td class="text-right hidden-xs">@wrapper.getLeftStake()</td>
-                    <td class="text-right hidden-xs">@wrapper.getLeftPointsAfter()</td>
-                    <td class="text-right hidden-xs">@wrapper.getRightPointsBefore()</td>
-                    <td class="text-right hidden-xs">@wrapper.getRightStake()</td>
-                    <td class="text-right hidden-xs">@wrapper.getRightPointsAfter()</td>
-                    <td class="min-width">
-                        <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                        </form>
-                    </td>
+                    <th>Date</th>
+                    <th>Left</th>
+                    <th>Right</th>
+                    <th colspan="3" class="text-center">Result</th>
+                    <th class="text-right hidden-xs">Before</th>
+                    <th class="text-right hidden-xs">Stake</th>
+                    <th class="text-right hidden-xs">After</th>
+                    <th class="text-right hidden-xs">Before</th>
+                    <th class="text-right hidden-xs">Stake</th>
+                    <th class="text-right hidden-xs">After</th>
+                    <th class="min-width">&nbsp</th>
                 </tr>
+                @for(wrapper <- calc.getGames) {
+                    @defining(wrapper.getGame) { game =>
+                    <tr>
+                        <td>@game.date.format("yyyy-MM-dd")</td>
+                        <td>@game.playerLeft.name</td>
+                        <td>@game.playerRight.name</td>
+                        <td class="text-right">@game.pointsLeft</td>
+                        <td class="text-center">-</td>
+                        <td class="text-left">@game.pointsRight</td>
+                        <td class="text-right hidden-xs">@wrapper.getLeftPointsBefore()</td>
+                        <td class="text-right hidden-xs">@wrapper.getLeftStake()</td>
+                        <td class="text-right hidden-xs">@wrapper.getLeftPointsAfter()</td>
+                        <td class="text-right hidden-xs">@wrapper.getRightPointsBefore()</td>
+                        <td class="text-right hidden-xs">@wrapper.getRightStake()</td>
+                        <td class="text-right hidden-xs">@wrapper.getRightPointsAfter()</td>
+                        <td class="min-width">
+                            <form action="@routes.Application.removeGame(wrapper.getGame.id)" method="post">
+                                <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                            </form>
+                        </td>
+                    </tr>
+                    }
                 }
-            }
-        </table>
+            </table>
+        </div>
     </div>
 
 }

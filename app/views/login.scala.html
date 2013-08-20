@@ -34,28 +34,30 @@
                             <h2 class="panel-title">Login</h2>
                         </div>
 
-                        <form action="@routes.Application.login" method="post">
-                            <fieldset>
-                                @if(loginForm.hasErrors) {
-                                    <div class="alert alert-error">
-                                        <strong>Unable to login!</strong>
-                                        @loginForm.globalErrors.map { error =>
-                                            <div>@error.message</div>
-                                        }
-                                    </div>
-                                }
+                        <div class="panel-body">
+                            <form action="@routes.Application.login" method="post">
+                                <fieldset>
+                                    @if(loginForm.hasErrors) {
+                                        <div class="alert alert-error">
+                                            <strong>Unable to login!</strong>
+                                            @loginForm.globalErrors.map { error =>
+                                                <div>@error.message</div>
+                                            }
+                                        </div>
+                                    }
 
-                                <div class="form-group">
-                                    <label for="username-input">Email address</label>
-                                    <input type="text" name="username" class="form-control" id="username-input" placeholder="Enter email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password-input">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password-input" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-success pull-right">Login <span class="glyphicon glyphicon-heart"></span></button>
-                            </fieldset>
-                        </form>
+                                    <div class="form-group">
+                                        <label for="username-input">Email address</label>
+                                        <input type="text" name="username" class="form-control" id="username-input" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password-input">Password</label>
+                                        <input type="password" name="password" class="form-control" id="password-input" placeholder="Password">
+                                    </div>
+                                    <button type="submit" class="btn btn-success pull-right">Login <span class="glyphicon glyphicon-heart"></span></button>
+                                </fieldset>
+                            </form>
+                        </div>
 
                     </div>
                 </div>

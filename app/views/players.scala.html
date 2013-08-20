@@ -7,18 +7,20 @@
             <h1 class="panel-title">Players</h1>
         </div>
 
-        <table class="table table-condensed table-striped table-hover">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-            @for(player <- players) {
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-hover">
                 <tr>
-                    <td>@player.id</td>
-                    <td>@player.name</td>
+                    <th>Id</th>
+                    <th>Name</th>
                 </tr>
-            }
-        </table>
+                @for(player <- players) {
+                    <tr>
+                        <td>@player.id</td>
+                        <td>@player.name</td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 
 }

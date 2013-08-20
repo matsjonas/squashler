@@ -21,13 +21,30 @@
         <div class="container">
 
             <div class="navbar navbar-inverse">
-                <span class="navbar-brand">Welcome to Squashler!</span>
-                <ul class="nav navbar-nav">
-                    <li class="@if(activeMenu.equals("overview")) { active }"><a href="@routes.Application.overview()">Overview</a></li>
-                    <li class="@if(activeMenu.equals("players")) { active }"><a href="@routes.Application.players()">Players</a></li>
-                  </ul>
-                <a href="/logout" class="btn btn-default navbar-btn pull-right">Logout <span class="glyphicon glyphicon-off"></span></a>
-                <p class="navbar-text pull-right">Signed in as <em>whoever</em></p>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="navbar-brand">Welcome to Squashler!</span>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="@if(activeMenu.equals("overview")) { active }"><a href="@routes.Application.overview()">Overview</a></li>
+                        <li class="@if(activeMenu.equals("players")) { active }"><a href="@routes.Application.players()">Players</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/logout" class="">Logout <span class="glyphicon glyphicon-off"></span></a></li>
+                    </ul>
+
+                    <p class="navbar-text pull-right">Signed in as <em>whoever</em></p>
+
+                </div>
+
             </div>
 
             @content

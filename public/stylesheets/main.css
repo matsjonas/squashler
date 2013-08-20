@@ -59,17 +59,3 @@ table tbody>tr>td.min-width .btn {
 .text-center {
     text-align: center;
 }
-
-/* Add missing paddings in Bootstrap RC2 */
-
-.panel {
-    padding: 15px;
-}
-
-.panel .panel-heading {
-    margin: -15px -15px 15px;
-}
-
-.navbar {
-    padding-right: 15px;
-}
