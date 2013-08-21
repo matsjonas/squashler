@@ -86,7 +86,7 @@ public class Game extends Model {
     }
 
     private static int getMaxGameNbr(Date date) {
-        List<Game> list = find.where().eq("date", date).orderBy("gameNbr desc").setMaxRows(1).findList();
+        List<Game> list = find.where().le("date", date).orderBy("gameNbr desc").setMaxRows(1).findList();
         if (list.isEmpty()) {
             return 0;
         } else {
