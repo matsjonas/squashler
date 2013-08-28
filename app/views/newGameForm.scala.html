@@ -22,14 +22,16 @@
     <div class="form-group @if(gameForm.field("playerLeft").hasErrors || gameForm.field("playerRight").hasErrors) { has-error }">
         <label for="playerLeft" class="col-xs-2 control-label">Players</label>
         <div class="col-xs-5">
-            <select name="playerLeft" id="playerLeft" class="form-control" placeholder="player left">
+            <select name="playerLeft" id="playerLeft" class="form-control">
+                <option value="">select player</option>
                 @for(player <- players) {
                     <option value="@player.name">@player.name</option>
                 }
             </select>
         </div>
         <div class="col-xs-5">
-            <select name="playerRight" id="playerRight" class="form-control" placeholder="player right">
+            <select name="playerRight" id="playerRight" class="form-control">
+                <option value="">select player</option>
             @for(player <- players) {
                 <option value="@player.name">@player.name</option>
             }
