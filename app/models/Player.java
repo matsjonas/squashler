@@ -42,6 +42,17 @@ public class Player extends Model {
         return find.where().eq("name", name).orderBy("name").findUnique();
     }
 
+    public static void remove(long id) {
+        Player player = byId(id);
+        for (Game game : player.gamesOnLeft) {
+            Game.remove(game.id);
+        }
+        for (Game game : player.gamesOnRight) {
+            Game.remove(game.id);
+        }
+        player.delete();
+    }
+
     public static List<Player> search(String query) {
         return find.where().ilike("name", String.format("%%%s%%", query)).findList();
     }
@@ -61,5 +72,4 @@ public class Player extends Model {
             return newPlayer;
         }
     }
-
 }
