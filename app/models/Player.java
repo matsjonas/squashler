@@ -34,6 +34,10 @@ public class Player extends Model {
         return find.where().orderBy("name").findList();
     }
 
+    public static Player byId(long id) {
+        return find.byId(id);
+    }
+
     public static Player byName(String name) {
         return find.where().eq("name", name).orderBy("name").findUnique();
     }
