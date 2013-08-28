@@ -1,4 +1,4 @@
-@(gameForm: DynamicForm)
+@(gameForm: DynamicForm, players: List[Player])
 
 @if(gameForm.hasErrors) {
     <div class="alert alert-danger">
@@ -22,10 +22,18 @@
     <div class="form-group @if(gameForm.field("playerLeft").hasErrors || gameForm.field("playerRight").hasErrors) { has-error }">
         <label for="playerLeft" class="col-xs-2 control-label">Players</label>
         <div class="col-xs-5">
-            <input type="text" id="playerLeft" name="playerLeft" placeholder="player left" value="@gameForm.get("playerLeft")" class="form-control player-typeahead"/>
+            <select name="playerLeft" id="playerLeft" class="form-control" placeholder="player left">
+                @for(player <- players) {
+                    <option value="@player.name">@player.name</option>
+                }
+            </select>
         </div>
         <div class="col-xs-5">
-            <input type="text" id="playerRight" name="playerRight" placeholder="player right" value="@gameForm.get("playerRight")" class="form-control player-typeahead"/>
+            <select name="playerRight" id="playerRight" class="form-control" placeholder="player right">
+            @for(player <- players) {
+                <option value="@player.name">@player.name</option>
+            }
+            </select>
         </div>
     </div>
     <div class="form-group @if(gameForm.field("pointsLeft").hasErrors || gameForm.field("pointsRight").hasErrors) { has-error }">

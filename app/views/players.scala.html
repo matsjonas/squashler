@@ -1,25 +1,69 @@
-@(players: List[Player])
+@(players: List[Player], playerForm: DynamicForm)
 
 @main("players") {
 
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <h1 class="panel-title">Players</h1>
-        </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Add player</h1>
+                </div>
+                <div class="panel-body">
+                    @if(playerForm.hasErrors) {
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong>
+                            Unable to insert player!
+                            @for(errList <- playerForm.errors()) {
+                                @for(err <- errList._2) {
+                                    <br/> <span class="glyphicon glyphicon-warning-sign"></span> @err.message()
+                                }
+                            }
+                        </div>
+                    }
 
-        <div class="panel-body">
-            <table class="table table-condensed table-striped table-hover">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                </tr>
-                @for(player <- players) {
-                    <tr>
-                        <td>@player.id</td>
-                        <td>@player.name</td>
-                    </tr>
-                }
-            </table>
+                    <form class="form-horizontal" action="@routes.Application.insertPlayer()" method="post">
+                        <div class="form-group @if(playerForm.field("date").hasErrors) { has-error }">
+                            <label for="name" class="col-xs-2 control-label">Date</label>
+                            <div class="col-xs-10">
+                                <input type="text" id="name" name="name" placeholder="new player name" value="@playerForm.get("name")" class="form-control" autofocus/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-5 col-sm-offset-7 col-lg-5 col-lg-offset-7">
+                                <button type="submit" class="btn btn-block btn-success" name="insert">Submit <span class="glyphicon glyphicon-ok"></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Players</h1>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table table-condensed table-striped table-hover">
+                        <tr>
+                            <th class="min-width">Id</th>
+                            <th>Name</th>
+                            <th class="min-width">&nbsp</th>
+                        </tr>
+                        @for(player <- players) {
+                            <tr>
+                                <td>@player.id</td>
+                                <td>@player.name</td>
+                                <td class="min-width">
+                                    <form action="@routes.Application.removePlayer(player.id)" method="post">
+                                        <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 

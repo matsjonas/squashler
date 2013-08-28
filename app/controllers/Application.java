@@ -59,7 +59,8 @@ public class Application extends Controller {
         defaults.put("pointsLeft", "11");
         form = form.bind(defaults);
 
-        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form));
+        List<Player> all = Player.all();
+        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form, all));
     }
 
     @Security.Authenticated(Secured.class)
@@ -96,7 +97,7 @@ public class Application extends Controller {
         }
 
         if(gameForm.hasErrors()) {
-            return badRequest(overview.render(StandingsCalculator.create(Game.all(), Player.all()), gameForm));
+            return badRequest(overview.render(StandingsCalculator.create(Game.all(), Player.all()), gameForm, Player.all()));
         } else {
             Player player1 = Player.getOrCreate(playerLeftName);
             Player player2 = Player.getOrCreate(playerRightName);
@@ -129,7 +130,29 @@ public class Application extends Controller {
     }
 
     public static Result players() {
-        return ok(players.render(Player.all()));
+        DynamicForm form = DynamicForm.form();
+        return ok(players.render(Player.all(), form));
+    }
+
+    public static Result insertPlayer() {
+        DynamicForm playerForm = DynamicForm.form().bindFromRequest();
+
+        String name = playerForm.data().get("name");
+        if (StringUtils.isBlank(name)) {
+            playerForm.reject("name", "Name must not be empty.");
+        }
+
+        if (playerForm.hasErrors()) {
+            return badRequest(players.render(Player.all(), playerForm));
+        } else {
+            Player.getOrCreate(name);
+            return redirect(routes.Application.players());
+        }
+    }
+
+    public static Result removePlayer(long id) {
+        Player.remove(id);
+        return redirect(routes.Application.players());
     }
 
     public static class LoginCredentials {
