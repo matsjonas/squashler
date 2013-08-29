@@ -98,6 +98,41 @@ public class StandingsCalculator {
         return players;
     }
 
+    public List<Date> getGameDates() {
+        List<Date> gameDates = new ArrayList<>();
+        for (GameWrapper wrapper : games) {
+            Game game = wrapper.game;
+            if (!gameDates.contains(game.date)) {
+                gameDates.add(game.date);
+            }
+        }
+        return gameDates;
+    }
+
+    public List<Player> getAllPlayers() {
+        List<Player> allPlayers = new ArrayList<>();
+        for (PlayerWrapper wrapper : players) {
+            allPlayers.add(wrapper.player);
+        }
+        return allPlayers;
+    }
+
+    public int getPointsAfterGameDate(Date date, Player player) {
+        int points = 0;
+        for (GameWrapper wrapper : getGames()) {
+            if (wrapper.game.date.equals(date) || wrapper.game.date.before(date)) {
+                if (wrapper.game.playerLeft.equals(player)) {
+                    points = wrapper.getLeftPointsAfter();
+                    break;
+                } else if (wrapper.game.playerRight.equals(player)) {
+                    points = wrapper.getRightPointsAfter();
+                    break;
+                }
+            }
+        }
+        return points;
+    }
+
     public class PlayerWrapper {
 
         private Player player;

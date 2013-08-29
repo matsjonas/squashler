@@ -1,0 +1,60 @@
+@(standings: util.StandingsCalculator)
+
+@main("charts") {
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2004',  1000,      400],
+                ['2005',  1170,      460],
+                ['2006',  660,       1120],
+                ['2007',  1030,      540]
+            ]);
+            data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+
+            @for(player <- standings.getAllPlayers()) {
+                data.addColumn('number', '@player.name');
+            }
+
+            var row = [];
+            @for(date <- standings.getGameDates()) {
+                row.push('@date.format("yyyy-MM-dd")');
+                @for(player <- standings.getAllPlayers()) {
+                    @if(standings.getPointsAfterGameDate(date, player) > 0) {
+                        row.push(@standings.getPointsAfterGameDate(date, player));
+                    }
+                    @if(standings.getPointsAfterGameDate(date, player) == 0) {
+                        row.push(null);
+                    }
+                }
+                data.addRow(row);
+                row = [];
+            }
+
+            var options = {
+                height: '600',
+                lineWidth: 3,
+                pointSize: 5
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h1 class="panel-title">Points over time</h1>
+        </div>
+
+        <div class="panel-body">
+            <div id="chart_div"></div>
+        </div>
+    </div>
+
+}

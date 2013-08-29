@@ -155,6 +155,10 @@ public class Application extends Controller {
         return redirect(routes.Application.players());
     }
 
+    public static Result charts() {
+        return ok(charts.render(StandingsCalculator.create(Game.all(), Player.all())));
+    }
+
     public static class LoginCredentials {
 
         public String username;

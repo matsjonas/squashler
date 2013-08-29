@@ -14,6 +14,7 @@ POST     /insertPlayer               controllers.Application.insertPlayer()
 GET      /player/:q                  controllers.Application.player(q: String)
 POST     /remove-game/:id            controllers.Application.removeGame(id: Long)
 POST     /remove-player/:id          controllers.Application.removePlayer(id: Long)
+GET      /charts                     controllers.Application.charts()
 
 # Map static resources from the /public folder to the /assets URL path
 GET      /assets/*file               controllers.Assets.at(path="/public", file)
