@@ -2,6 +2,9 @@ package util;
 
 import models.Game;
 import models.Player;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ArrayNode;
 
 import java.util.*;
 
@@ -132,6 +135,43 @@ public class StandingsCalculator {
             }
         }
         return points;
+    }
+
+    public JsonNode getChart2Stuff() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode result = mapper.createArrayNode();
+        List<PlayerWrapper> playerWrappers = getPlayers();
+
+        ArrayNode columns = mapper.createArrayNode();
+        columns.add("Game");
+        for (PlayerWrapper playerWrapper : playerWrappers) {
+            columns.add(playerWrapper.player.name);
+        }
+        result.add(columns);
+
+        for (GameWrapper gameWrapper : games) {
+            ArrayNode column = mapper.createArrayNode();
+            Game game = gameWrapper.game;
+            column.add(game.gameNbr);
+
+            for (PlayerWrapper playerWrapper : playerWrappers) {
+                Player player = playerWrapper.player;
+                if (player.equals(game.playerLeft)) {
+                    column.add(gameWrapper.leftPointsAfter);
+                } else if (player.equals(game.playerRight)) {
+                    column.add(gameWrapper.rightPointsAfter);
+                } else {
+                    column.add((Integer) null);
+                }
+            }
+
+            result.add(column);
+        }
+
+
+        System.out.println(result);
+
+        return result;
     }
 
     public class PlayerWrapper {

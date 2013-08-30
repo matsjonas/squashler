@@ -1,12 +1,19 @@
 @(standings: util.StandingsCalculator)
+@import play.libs.Json
 
 @main("charts") {
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
+        google.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawChart1();
+            drawChart2();
+        }
+
+        function drawChart1() {
             var data = google.visualization.arrayToDataTable([
                 ['Year', 'Sales', 'Expenses'],
                 ['2004',  1000,      400],
@@ -45,6 +52,18 @@
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
+
+        function drawChart2() {
+        var data = google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart2Stuff())));
+
+            var options = {
+                height: '600',
+                pointSize: 5
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div_2'));
+            chart.draw(data, options);
+        }
     </script>
 
     <div class="panel panel-success">
@@ -54,6 +73,16 @@
 
         <div class="panel-body">
             <div id="chart_div"></div>
+        </div>
+    </div>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h1 class="panel-title">Points over time</h1>
+        </div>
+
+        <div class="panel-body">
+            <div id="chart_div_2"></div>
         </div>
     </div>
 
