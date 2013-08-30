@@ -106,6 +106,7 @@ public class StandingsCalculator {
                 gameDates.add(game.date);
             }
         }
+        Collections.sort(gameDates);
         return gameDates;
     }
 
