@@ -42,6 +42,10 @@ public class Game extends Model {
         return find.where().orderBy("date, gameNbr").findList();
     }
 
+    public static Game byId(long id) {
+        return find.byId(id);
+    }
+
     public static Game insert(Game game) {
         game.save();
         return game;
