@@ -14,46 +14,22 @@
         }
 
         function drawChart1() {
-            data = new google.visualization.DataTable();
-            data.addColumn('string', 'Date');
-
-            @for(player <- standings.getAllPlayers()) {
-                data.addColumn('number', '@player.name');
-            }
-
-            var row = [];
-            @for(date <- standings.getGameDates()) {
-                row.push('@date.format("yyyy-MM-dd")');
-                @for(player <- standings.getAllPlayers()) {
-                    @if(standings.getPointsAfterGameDate(date, player) > 0) {
-                        row.push(@standings.getPointsAfterGameDate(date, player));
-                    }
-                    @if(standings.getPointsAfterGameDate(date, player) == 0) {
-                        row.push(null);
-                    }
-                }
-                data.addRow(row);
-                row = [];
-            }
-
+            var data = new google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart1Stuff())));
             var options = {
                 height: '600',
                 lineWidth: 3,
                 pointSize: 5
             };
-
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
 
         function drawChart2() {
-        var data = google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart2Stuff())));
-
+            var data = google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart2Stuff())));
             var options = {
                 height: '600',
                 pointSize: 5
             };
-
             var chart = new google.visualization.ScatterChart(document.getElementById('chart_div_2'));
             chart.draw(data, options);
         }

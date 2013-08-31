@@ -2,6 +2,8 @@ package util;
 
 import models.Game;
 import models.Player;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
@@ -137,6 +139,35 @@ public class StandingsCalculator {
         return points;
     }
 
+    public JsonNode getChart1Stuff() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode result = mapper.createArrayNode();
+        List<PlayerWrapper> playerWrappers = getPlayers();
+
+        ArrayNode columns = mapper.createArrayNode();
+        columns.add("Date");
+        for (PlayerWrapper playerWrapper : playerWrappers) {
+            columns.add(playerWrapper.player.name);
+        }
+        result.add(columns);
+
+        for (Date date : getGameDates()) {
+            ArrayNode row = mapper.createArrayNode();
+            row.add(DateFormatUtils.format(date, "yyyy-MM-dd"));
+            for (Player player : getAllPlayers()) {
+                int pointsAfterGameDate = getPointsAfterGameDate(date, player);
+                if (pointsAfterGameDate > 0) {
+                    row.add(pointsAfterGameDate);
+                } else {
+                    row.add((Integer) null);
+                }
+            }
+            result.add(row);
+        }
+
+        return result;
+    }
+
     public JsonNode getChart2Stuff() {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode result = mapper.createArrayNode();
@@ -150,22 +181,21 @@ public class StandingsCalculator {
         result.add(columns);
 
         for (GameWrapper gameWrapper : games) {
-            ArrayNode column = mapper.createArrayNode();
+            ArrayNode row = mapper.createArrayNode();
             Game game = gameWrapper.game;
-            column.add(game.gameNbr);
+            row.add(game.gameNbr);
 
             for (PlayerWrapper playerWrapper : playerWrappers) {
                 Player player = playerWrapper.player;
                 if (player.equals(game.playerLeft)) {
-                    column.add(gameWrapper.leftPointsAfter);
+                    row.add(gameWrapper.leftPointsAfter);
                 } else if (player.equals(game.playerRight)) {
-                    column.add(gameWrapper.rightPointsAfter);
+                    row.add(gameWrapper.rightPointsAfter);
                 } else {
-                    column.add((Integer) null);
+                    row.add((Integer) null);
                 }
             }
-
-            result.add(column);
+            result.add(row);
         }
 
         return result;
