@@ -139,7 +139,7 @@ public class StandingsCalculator {
         return points;
     }
 
-    public JsonNode getChart1Stuff() {
+    public JsonNode getLineChartJSON() {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode result = mapper.createArrayNode();
         List<PlayerWrapper> playerWrappers = getPlayers();
@@ -168,7 +168,7 @@ public class StandingsCalculator {
         return result;
     }
 
-    public JsonNode getChart2Stuff() {
+    public JsonNode getScatterChartJSON() {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode result = mapper.createArrayNode();
         List<PlayerWrapper> playerWrappers = getPlayers();

@@ -14,7 +14,7 @@
         }
 
         function drawChart1() {
-            var data = new google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart1Stuff())));
+            var data = new google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getLineChartJSON())));
             var options = {
                 height: '600',
                 lineWidth: 3,
@@ -25,7 +25,7 @@
         }
 
         function drawChart2() {
-            var data = google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getChart2Stuff())));
+            var data = google.visualization.arrayToDataTable(@Html(Json.stringify(standings.getScatterChartJSON())));
             var options = {
                 height: '600',
                 pointSize: 5
