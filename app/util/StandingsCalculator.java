@@ -168,9 +168,6 @@ public class StandingsCalculator {
             result.add(column);
         }
 
-
-        System.out.println(result);
-
         return result;
     }
 
