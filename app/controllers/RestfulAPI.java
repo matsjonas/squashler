@@ -31,7 +31,8 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result game(long id) {
-        return play.mvc.Results.TODO;
+        Game game = Game.byId(id);
+        return ok(getGameJsonNode(game));
     }
 
     public static Result createGame() {
