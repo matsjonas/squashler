@@ -49,7 +49,12 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result deletePlayer(long id) {
-        return play.mvc.Results.TODO;
+        Player player = Player.byId(id);
+        player.delete();
+
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("status", "OK");
+        return ok(result);
     }
 
     public static Result game(long id) {
