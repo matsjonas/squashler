@@ -34,7 +34,18 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result updatePlayer(long id) {
-        return play.mvc.Results.TODO;
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+
+        String name = request.get("name").asText();
+        Player player = Player.byId(id);
+        player.name = name;
+        player.save();
+
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("status", "OK");
+        result.put("player", getPlayerJsonNode(player));
+        return ok(result);
     }
 
     public static Result deletePlayer(long id) {
