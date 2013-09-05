@@ -3,9 +3,11 @@ package controllers;
 import models.Game;
 import models.Player;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import util.JsonUtils;
 
@@ -19,7 +21,16 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result createPlayer() {
-        return play.mvc.Results.TODO;
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+
+        String name = request.get("name").asText();
+        Player player = Player.getOrCreate(name);
+
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("status", "OK");
+        result.put("player", getPlayerJsonNode(player));
+        return ok(result);
     }
 
     public static Result updatePlayer(long id) {
