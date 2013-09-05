@@ -3,6 +3,7 @@ package controllers;
 import models.Game;
 import models.Player;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -11,6 +12,8 @@ import play.mvc.Http;
 import play.mvc.Result;
 import util.JsonUtils;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public class RestfulAPI extends Controller {
@@ -63,7 +66,25 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result createGame() {
-        return play.mvc.Results.TODO;
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+
+        Date date = new Date();
+        try {
+            date = DateUtils.parseDate(request.get("date").asText(), "yyyy-MM-dd");
+        } catch (ParseException ignored) { }
+
+        Player playerLeft = Player.byId(request.get("playerLeft").asInt());
+        Player playerRight = Player.byId(request.get("playerRight").asInt());
+        int pointsLeft = request.get("pointsLeft").asInt();
+        int pointsRight = request.get("pointsRight").asInt();
+
+        Game game = Game.insert(date, playerLeft, playerRight, pointsLeft, pointsRight);
+
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("status", "OK");
+        result.put("game", getGameJsonNode(game));
+        return ok(result);
     }
 
     public static Result updateGame(long id) {
