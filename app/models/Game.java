@@ -64,6 +64,11 @@ public class Game extends Model {
 
     public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
         Game game = new Game();
+        update(game, date, playerLeft, playerRight, pointsRight, pointsLeft);
+        return game;
+    }
+
+    public static void update(Game game, Date date, Player playerLeft, Player playerRight, int pointsRight, int pointsLeft) {
         game.date = date;
         game.gameNbr = getMaxGameNbr(date) + 1;
         game.playerLeft = playerLeft;
@@ -73,7 +78,6 @@ public class Game extends Model {
 
         game.save();
         recalculateGameNbrsFrom(game);
-        return game;
     }
 
     private static void recalculateGameNbrsFrom(Game game) {
