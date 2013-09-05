@@ -88,7 +88,27 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result updateGame(long id) {
-        return play.mvc.Results.TODO;
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+
+        Date date = new Date();
+        try {
+            date = DateUtils.parseDate(request.get("date").asText(), "yyyy-MM-dd");
+        } catch (ParseException ignored) {
+        }
+
+        Player playerLeft = Player.byId(request.get("playerLeft").asInt());
+        Player playerRight = Player.byId(request.get("playerRight").asInt());
+        int pointsLeft = request.get("pointsLeft").asInt();
+        int pointsRight = request.get("pointsRight").asInt();
+
+        Game game = Game.byId(id);
+        Game.update(game, date, playerLeft, playerRight, pointsLeft, pointsRight);
+
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("status", "OK");
+        result.put("game", getGameJsonNode(game));
+        return ok(result);
     }
 
     public static Result deleteGame(long id) {
