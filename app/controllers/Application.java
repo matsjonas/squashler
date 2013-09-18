@@ -60,7 +60,7 @@ public class Application extends Controller {
         form = form.bind(defaults);
 
         List<Player> all = Player.all();
-        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form, all));
+        return ok(overview.render(flash("message"), StandingsCalculator.create(Game.all(), Player.all()), form, all));
     }
 
     @Security.Authenticated(Secured.class)
@@ -97,13 +97,14 @@ public class Application extends Controller {
         }
 
         if(gameForm.hasErrors()) {
-            return badRequest(overview.render(StandingsCalculator.create(Game.all(), Player.all()), gameForm, Player.all()));
+            return badRequest(overview.render(flash("message"), StandingsCalculator.create(Game.all(), Player.all()), gameForm, Player.all()));
         } else {
             Player player1 = Player.getOrCreate(playerLeftName);
             Player player2 = Player.getOrCreate(playerRightName);
             int pointsLeft = Integer.parseInt(pointsLeftString.trim());
             int pointsRight = Integer.parseInt(pointsRightString.trim());
             Game.insert(date, player1, player2, pointsLeft, pointsRight);
+            flash("message", String.format("%s %d - %d %s added", playerLeftName, pointsLeft, pointsRight, playerRightName));
             return redirect(routes.Application.overview());
         }
     }
