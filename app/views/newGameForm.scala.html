@@ -25,7 +25,7 @@
             <select name="playerLeft" id="playerLeft" class="form-control">
                 <option value="">select player</option>
                 @for(player <- players) {
-                    <option value="@player.name">@player.name</option>
+                    <option value="@player.name" @if(player.name.equals(gameForm.get("playerLeft"))) { selected="selected" }>@player.name</option>
                 }
             </select>
         </div>
@@ -33,7 +33,7 @@
             <select name="playerRight" id="playerRight" class="form-control">
                 <option value="">select player</option>
             @for(player <- players) {
-                <option value="@player.name">@player.name</option>
+                <option value="@player.name" @if(player.name.equals(gameForm.get("playerRight"))) { selected="selected" }>@player.name</option>
             }
             </select>
         </div>
