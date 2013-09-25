@@ -48,17 +48,11 @@
                         <tr>
                             <th class="min-width">Id</th>
                             <th>Name</th>
-                            <th class="min-width">&nbsp</th>
                         </tr>
                         @for(player <- players) {
                             <tr>
                                 <td>@player.id</td>
                                 <td>@player.name</td>
-                                <td class="min-width">
-                                    <form action="@routes.Application.removePlayer(player.id)" method="post">
-                                        <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </form>
-                                </td>
                             </tr>
                         }
                     </table>
