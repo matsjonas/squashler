@@ -24,8 +24,8 @@ public class StandingsCalculator {
     }
 
     private StandingsCalculator(List<Game> games, List<Player> players) {
-        this.games = new ArrayList<>();
-        this.players = new ArrayList<>();
+        this.games = new ArrayList<GameWrapper>();
+        this.players = new ArrayList<PlayerWrapper>();
         for (Game game : games) {
             this.games.add(new GameWrapper(game));
         }
@@ -86,7 +86,7 @@ public class StandingsCalculator {
         Collections.sort(games, new Comparator<GameWrapper>() {
             @Override
             public int compare(GameWrapper o1, GameWrapper o2) {
-                return -Integer.compare(o1.game.gameNbr, o2.game.gameNbr);
+                return o2.game.gameNbr - o1.game.gameNbr;
             }
         });
         return games;
@@ -96,14 +96,14 @@ public class StandingsCalculator {
         Collections.sort(players, new Comparator<PlayerWrapper>() {
             @Override
             public int compare(PlayerWrapper o1, PlayerWrapper o2) {
-                return -Integer.compare(o1.currentPoints, o2.currentPoints);
+                return o2.currentPoints - o1.currentPoints;
             }
         });
         return players;
     }
 
     public List<Date> getGameDates() {
-        List<Date> gameDates = new ArrayList<>();
+        List<Date> gameDates = new ArrayList<Date>();
         for (GameWrapper wrapper : games) {
             Game game = wrapper.game;
             if (!gameDates.contains(game.date)) {
@@ -115,7 +115,7 @@ public class StandingsCalculator {
     }
 
     public List<Player> getAllPlayers() {
-        List<Player> allPlayers = new ArrayList<>();
+        List<Player> allPlayers = new ArrayList<Player>();
         for (PlayerWrapper wrapper : players) {
             allPlayers.add(wrapper.player);
         }
