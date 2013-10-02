@@ -23,13 +23,13 @@
     <div class="form-group @if(gameForm.field("date").hasErrors) { has-error }">
         <label for="date" class="col-xs-2 control-label">Date</label>
         <div class="col-xs-10">
-            <input type="text" id="date" name="date" placeholder="date" value="@gameForm.get("date")" class="form-control" autofocus/>
+            <input type="text" id="date" name="date" placeholder="date" value="@gameForm.get("date")" class="form-control"/>
         </div>
     </div>
     <div class="form-group @if(gameForm.field("playerLeft").hasErrors || gameForm.field("playerRight").hasErrors) { has-error }">
         <label for="playerLeft" class="col-xs-2 control-label">Players</label>
         <div class="col-xs-5">
-            <select name="playerLeft" id="playerLeft" class="form-control">
+            <select name="playerLeft" id="playerLeft" class="form-control" autofocus>
                 <option value="">select player</option>
                 @for(player <- players) {
                     <option value="@player.name" @if(player.name.equals(gameForm.get("playerLeft"))) { selected="selected" }>@player.name</option>
