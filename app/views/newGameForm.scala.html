@@ -48,10 +48,10 @@
     <div class="form-group @if(gameForm.field("pointsLeft").hasErrors || gameForm.field("pointsRight").hasErrors) { has-error }">
         <label for="pointsLeft" class="col-xs-2 control-label">Points</label>
         <div class="col-xs-5">
-            <input type="text" id="pointsLeft" name="pointsLeft" placeholder="points left" value="@gameForm.get("pointsLeft")" class="form-control"/>
+            <input type="tel" id="pointsLeft" name="pointsLeft" placeholder="points left" value="@gameForm.get("pointsLeft")" class="form-control"/>
         </div>
         <div class="col-xs-5">
-            <input type="text" id="pointsRight" name="pointsRight" placeholder="points right" value="@gameForm.get("pointsRight")" class="form-control"/>
+            <input type="tel" id="pointsRight" name="pointsRight" placeholder="points right" value="@gameForm.get("pointsRight")" class="form-control"/>
         </div>
     </div>
     <div class="form-group">
