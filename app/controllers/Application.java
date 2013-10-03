@@ -1,10 +1,8 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Game;
-import models.Player;
+import models.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -18,7 +16,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import util.StandingsCalculator;
 import views.html.*;
-import play.Logger;
 
 import java.text.ParseException;
 import java.util.*;
@@ -49,6 +46,11 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         return redirect(routes.Application.login());
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result gameGroups() {
+        return ok(gameGroups.render(GameGroup.all()));
     }
 
     @Security.Authenticated(Secured.class)

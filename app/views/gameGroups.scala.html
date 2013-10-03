@@ -1,0 +1,26 @@
+@(groups: List[GameGroup])
+
+@main("overview") {
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h1 class="panel-title">Groups</h1>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-hover table-xs-buttons">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+                @for(gameGroup <- groups) {
+                    <tr>
+                        <td>@gameGroup.id</td>
+                        <td>@gameGroup.name</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+}

@@ -35,6 +35,10 @@ public class Game extends Model {
     @Constraints.Required
     public int pointsRight;
 
+    @ManyToOne()
+    @Constraints.Required
+    public GameGroup gameGroup;
+
     @SuppressWarnings("unchecked")
     public static Finder<Long, Game> find = new Finder(Long.class, Game.class);
 
