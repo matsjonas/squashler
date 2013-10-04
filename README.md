@@ -9,6 +9,8 @@ Squashler is written using [Play Framework](http://www.playframework.com/). It i
 
 To run squashler using Play, stand in the squashler directory and type:
 
+Tested on java 1.6
+
 ```
 $ play run
 ```
