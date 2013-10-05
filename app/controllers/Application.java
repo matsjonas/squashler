@@ -2,7 +2,9 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
+import models.Game;
+import models.GameGroup;
+import models.Player;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -15,10 +17,17 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import util.StandingsCalculator;
-import views.html.*;
+import views.html.charts;
+import views.html.gameGroups;
+import views.html.login;
+import views.html.overview;
+import views.html.players;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static play.data.Form.form;
 
