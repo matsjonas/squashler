@@ -1,4 +1,4 @@
-@(message: String, gameForm: DynamicForm, players: List[Player])
+@(gameForm: DynamicForm, players: List[Player])
 
 @if(gameForm.hasErrors) {
     <div class="alert alert-danger">
@@ -12,10 +12,9 @@
     </div>
 }
 
-@if(message != null && !"".equals(message)) {
+@if(flash().get("message") != null && !"".equals(flash().get("message"))) {
     <div class="alert alert-success">
-        <strong>Success!</strong>
-        <br/><span class="glyphicon glyphicon-floppy-saved"></span> @message
+        <span class="glyphicon glyphicon-ok-sign"></span> <strong>Success!</strong> @flash().get("message")
     </div>
 }
 

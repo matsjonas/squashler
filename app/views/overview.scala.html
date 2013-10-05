@@ -1,4 +1,4 @@
-@(message: String, calc: util.StandingsCalculator, gameForm: DynamicForm, players: List[Player])
+@(calc: util.StandingsCalculator, gameForm: DynamicForm, players: List[Player])
 
 @main("overview") {
 
@@ -9,7 +9,7 @@
                     <h1 class="panel-title">Register</h1>
                 </div>
                 <div class="panel-body">
-                    @newGameForm(message, gameForm, players)
+                    @newGameForm(gameForm, players)
                 </div>
             </div>
         </div>
