@@ -10,8 +10,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import play.data.DynamicForm;
-import play.data.Form;
-import play.libs.Crypto;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,7 +17,6 @@ import play.mvc.Security;
 import util.StandingsCalculator;
 import views.html.charts;
 import views.html.gameGroups;
-import views.html.login;
 import views.html.overview;
 import views.html.players;
 
@@ -29,33 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static play.data.Form.form;
-
 public class Application extends Controller {
-
-    public static Result index() {
-        return redirect(routes.Application.login());
-    }
-
-    public static Result login() {
-        return ok(login.render(form(LoginCredentials.class)));
-    }
-
-    public static Result authenticate() {
-        Form<LoginCredentials> loginForm = form(LoginCredentials.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return badRequest(login.render(loginForm));
-        } else {
-            session().clear();
-            session(Secured.COOKIE_SECURITY_KEY, Crypto.encryptAES(loginForm.get().username));
-            return redirect(routes.Application.overview());
-        }
-    }
-
-    public static Result logout() {
-        session().clear();
-        return redirect(routes.Application.login());
-    }
 
     @Security.Authenticated(Secured.class)
     public static Result gameGroups() {
@@ -170,20 +141,6 @@ public class Application extends Controller {
 
     public static Result charts() {
         return ok(charts.render(StandingsCalculator.create(Game.all(), Player.all())));
-    }
-
-    public static class LoginCredentials {
-
-        public String username;
-        public String password;
-
-        public String validate() {
-            if(!username.equals("admin") || !password.equals("monkeyballs")) {
-                return "Invalid username or password";
-            }
-            return null;
-        }
-
     }
 
 }

@@ -1,4 +1,4 @@
-@(loginForm: Form[Application.LoginCredentials])
+@(loginForm: Form[Login.LoginCredentials])
 
 <!DOCTYPE html>
 
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <form action="@routes.Application.login" method="post">
+                            <form action="@routes.Login.authenticate" method="post">
                                 <fieldset>
                                     @if(loginForm.hasErrors) {
                                         <div class="alert alert-error">
