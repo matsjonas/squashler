@@ -1,7 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Game;
 import models.GameGroup;
 import models.Player;
@@ -10,7 +8,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import play.data.DynamicForm;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -88,21 +85,6 @@ public class Application extends Controller {
             flash("message", String.format("%s %s %d-%d added", playerLeftName, playerRightName, pointsLeft, pointsRight));
             return redirect(routes.Application.overview());
         }
-    }
-
-    public static Result player(String query) {
-        ObjectNode result = Json.newObject();
-        List<Player> players = Player.search(query);
-
-        ArrayNode playersAsJson = result.putArray("result");
-
-        for (Player player : players) {
-            ObjectNode json = Json.newObject();
-            json.put("name", player.name);
-            playersAsJson.add(json);
-        }
-
-        return ok(result);
     }
 
     public static Result removeGame(Long id) {
