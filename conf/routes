@@ -8,7 +8,8 @@ GET           /login                    controllers.Login.login()
 POST          /login                    controllers.Login.authenticate()
 GET           /logout                   controllers.Login.logout()
 
-GET           /gamegroups               controllers.Application.gameGroups()
+GET           /gamegroups               controllers.GameGroupPortal.gameGroups()
+
 GET           /overview                 controllers.Application.overview()
 POST          /insert                   controllers.Application.insert()
 GET           /players                  controllers.Application.players()

@@ -2,6 +2,15 @@
 
 @main("overview") {
 
+    @if(groups.isEmpty()) {
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="glyphicon glyphicon-warning-sign"></i> <strong>Warning!</strong> You have no game groups.
+            <br/><br/>
+            <i>You need at least one game group to use Squashler!</i>
+        </div>
+    }
+
     <div class="panel panel-success">
         <div class="panel-heading">
             <h1 class="panel-title">Groups</h1>

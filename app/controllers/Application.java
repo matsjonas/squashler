@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Game;
-import models.GameGroup;
 import models.Player;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -13,7 +12,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import util.StandingsCalculator;
 import views.html.charts;
-import views.html.gameGroups;
 import views.html.overview;
 import views.html.players;
 
@@ -23,12 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@GameGroupInSession.Validated
 @Security.Authenticated(Secured.class)
 public class Application extends Controller {
-
-    public static Result gameGroups() {
-        return ok(gameGroups.render(GameGroup.all()));
-    }
 
     public static Result overview() {
         DynamicForm form = DynamicForm.form();
