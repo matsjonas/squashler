@@ -26,14 +26,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Security.Authenticated(Secured.class)
 public class Application extends Controller {
 
-    @Security.Authenticated(Secured.class)
     public static Result gameGroups() {
         return ok(gameGroups.render(GameGroup.all()));
     }
 
-    @Security.Authenticated(Secured.class)
     public static Result overview() {
         DynamicForm form = DynamicForm.form();
 
@@ -46,7 +45,6 @@ public class Application extends Controller {
         return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form, all));
     }
 
-    @Security.Authenticated(Secured.class)
     public static Result insert() {
 
         DynamicForm gameForm = DynamicForm.form().bindFromRequest();
@@ -92,7 +90,6 @@ public class Application extends Controller {
         }
     }
 
-    @Security.Authenticated(Secured.class)
     public static Result player(String query) {
         ObjectNode result = Json.newObject();
         List<Player> players = Player.search(query);
