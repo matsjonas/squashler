@@ -1,7 +1,6 @@
 package util;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import models.Game;
 import models.Player;
@@ -139,11 +138,10 @@ public class StandingsCalculator {
     }
 
     public JsonNode getLineChartJSON() {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode result = mapper.createArrayNode();
+        ArrayNode result = JsonUtils.newArrayNode();
         List<PlayerWrapper> playerWrappers = getPlayers();
 
-        ArrayNode columns = mapper.createArrayNode();
+        ArrayNode columns = JsonUtils.newArrayNode();
         columns.add("Date");
         for (PlayerWrapper playerWrapper : playerWrappers) {
             columns.add(playerWrapper.player.name);
@@ -151,7 +149,7 @@ public class StandingsCalculator {
         result.add(columns);
 
         for (Date date : getGameDates()) {
-            ArrayNode row = mapper.createArrayNode();
+            ArrayNode row = JsonUtils.newArrayNode();
             row.add(DateFormatUtils.format(date, "yyyy-MM-dd"));
             for (Player player : getAllPlayers()) {
                 int pointsAfterGameDate = getPointsAfterGameDate(date, player);
@@ -168,11 +166,10 @@ public class StandingsCalculator {
     }
 
     public JsonNode getScatterChartJSON() {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode result = mapper.createArrayNode();
+        ArrayNode result = JsonUtils.newArrayNode();
         List<PlayerWrapper> playerWrappers = getPlayers();
 
-        ArrayNode columns = mapper.createArrayNode();
+        ArrayNode columns = JsonUtils.newArrayNode();
         columns.add("Game");
         for (PlayerWrapper playerWrapper : playerWrappers) {
             columns.add(playerWrapper.player.name);
@@ -180,7 +177,7 @@ public class StandingsCalculator {
         result.add(columns);
 
         for (GameWrapper gameWrapper : games) {
-            ArrayNode row = mapper.createArrayNode();
+            ArrayNode row = JsonUtils.newArrayNode();
             Game game = gameWrapper.game;
             row.add(game.gameNbr);
 
