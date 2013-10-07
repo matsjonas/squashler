@@ -1,4 +1,4 @@
-@(groups: List[GameGroup])
+@(groups: List[GameGroup], form: DynamicForm)
 
 @main("overview") {
 
@@ -17,6 +17,34 @@
         </div>
 
         <div class="panel-body">
+
+            <div class="">
+                @if(form.hasErrors) {
+                    <div class="alert alert-danger">
+                        <strong>Error!</strong>
+                        Unable to insert player!
+                        @for(errList <- form.errors()) {
+                            @for(err <- errList._2) {
+                                <br/> <span class="glyphicon glyphicon-warning-sign"></span> @err.message()
+                            }
+                        }
+                    </div>
+                }
+
+                <form class="form-inline" action="@routes.GameGroupPortal.insertGameGroup()" method="post">
+                    <div class="form-group @if(form.field("name").hasErrors) { has-error }">
+                        <div>
+                            <input type="text" id="name" name="name" placeholder="New game group" value="@form.get("name")" class="form-control" autofocus/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-success" name="insert">Add <span class="glyphicon glyphicon-ok"></span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <table class="table table-condensed table-striped table-hover table-xs-buttons">
                 <tr>
                     <th>Id</th>
