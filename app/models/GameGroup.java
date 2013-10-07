@@ -44,6 +44,7 @@ public class GameGroup extends Model {
     public static GameGroup insert(String name) {
         GameGroup gameGroup = new GameGroup();
         gameGroup.name = name;
+        gameGroup.save();
         return gameGroup;
     }
 
