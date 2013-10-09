@@ -33,6 +33,7 @@
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
+                        <li class="@if(activeMenu.equals("gamegroups")) { active }"><a href="@routes.GameGroupPortal.gameGroups()">Groups</a></li>
                         <li class="@if(activeMenu.equals("overview")) { active }"><a href="@routes.Application.overview()">Overview</a></li>
                         <li class="@if(activeMenu.equals("players")) { active }"><a href="@routes.Application.players()">Players</a></li>
                         <li class="@if(activeMenu.equals("charts")) { active }"><a href="@routes.Application.charts()">Charts</a></li>
