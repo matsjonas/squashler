@@ -31,4 +31,10 @@ public class GameGroupPortal extends Controller {
         }
     }
 
+    public static Result selectGameGroup(long gamegroupid) {
+        session().put(GameGroupInSession.GAMEGROUP_SESSION_KEY, String.valueOf(gamegroupid));
+
+        return redirect(routes.Application.overview());
+    }
+
 }

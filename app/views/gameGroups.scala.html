@@ -53,7 +53,7 @@
                 @for(gameGroup <- groups) {
                     <tr>
                         <td>@gameGroup.id</td>
-                        <td>@gameGroup.name</td>
+                        <td><a href="@routes.GameGroupPortal.selectGameGroup(gameGroup.id)">@gameGroup.name</a></td>
                     </tr>
                 }
             </table>
