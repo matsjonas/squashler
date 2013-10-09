@@ -37,4 +37,17 @@ public class GameGroupPortal extends Controller {
         return redirect(routes.Application.overview());
     }
 
+    /**
+     * Returns the currently selected {@link models.GameGroup} or null if none is selected.
+     * @return
+     */
+    public static GameGroup getSelectedGameGroup() {
+        String gameGroupid = session().get(GameGroupInSession.GAMEGROUP_SESSION_KEY);
+        if (gameGroupid == null) {
+            return null;
+        } else {
+            return GameGroup.byId(Long.parseLong(gameGroupid));
+        }
+    }
+
 }
