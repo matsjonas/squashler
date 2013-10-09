@@ -22,11 +22,9 @@ public class GameGroupPortal extends Controller {
         }
 
         if (playerForm.hasErrors()) {
-            System.out.println("GameGroupPortal.insertGameGroup 1");
             return badRequest(gameGroups.render(GameGroup.all(), playerForm));
         } else {
             GameGroup.insert(name);
-            System.out.println("GameGroupPortal.insertGameGroup 2");
             return redirect(routes.GameGroupPortal.gameGroups());
         }
     }
