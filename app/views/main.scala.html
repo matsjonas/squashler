@@ -1,4 +1,4 @@
-@(activeMenu: String)(content: Html)
+@(activeMenu: String)(extraHeader: Html = Html.empty)(content: Html)
 
 <!DOCTYPE html>
 
@@ -16,6 +16,7 @@
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
         <script src="@routes.Assets.at("javascripts/typeahead.min.js")"></script>
         <script src="@routes.Assets.at("javascripts/main.js")"></script>
+        @extraHeader
     </head>
     <body>
         <div class="container">
