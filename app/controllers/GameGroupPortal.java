@@ -1,11 +1,14 @@
 package controllers;
 
+import models.Game;
 import models.GameGroup;
 import org.apache.commons.lang3.StringUtils;
 import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.gameGroups;
+
+import java.util.List;
 
 public class GameGroupPortal extends Controller {
 
@@ -24,7 +27,14 @@ public class GameGroupPortal extends Controller {
         if (playerForm.hasErrors()) {
             return badRequest(gameGroups.render(GameGroup.all(), playerForm));
         } else {
-            GameGroup.insert(name);
+            GameGroup gameGroup = GameGroup.insert(name);
+            if (GameGroup.all().size() == 1) {
+                List<Game> games = Game.all();
+                for (Game game : games) {
+                    game.gameGroup = gameGroup;
+                    game.save();
+                }
+            }
             return redirect(routes.GameGroupPortal.gameGroups());
         }
     }
