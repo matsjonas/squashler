@@ -46,3 +46,11 @@ function selectedPlayerOne() {
         jQuery('#playerTwo option[value=' + playerOne + ']').attr('disabled','disabled');
     }
 }
+
+/* Clears the filter and shows all games */
+function clearFilter() {
+    jQuery('#playerOne').val('');
+    jQuery('#playerTwo').hide();
+    jQuery('#playerTwo').val('');
+    filterPlayers();
+}
