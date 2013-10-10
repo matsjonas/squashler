@@ -46,6 +46,10 @@ public class Game extends Model {
         return find.where().orderBy("date, gameNbr").findList();
     }
 
+    public static List<Game> allInGroup(Long gameGroupId) {
+        return find.where().eq("gameGroup.id", gameGroupId).orderBy("date, gameNbr").findList();
+    }
+
     public static Game byId(long id) {
         return find.byId(id);
     }
@@ -66,15 +70,16 @@ public class Game extends Model {
         }
     }
 
-    public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight) {
+    public static Game insert(Date date, Player playerLeft, Player playerRight, int pointsLeft, int pointsRight, GameGroup gameGroup) {
         Game game = new Game();
+        game.gameGroup = gameGroup;
         update(game, date, playerLeft, playerRight, pointsRight, pointsLeft);
         return game;
     }
 
     public static void update(Game game, Date date, Player playerLeft, Player playerRight, int pointsRight, int pointsLeft) {
         game.date = date;
-        game.gameNbr = getMaxGameNbr(date) + 1;
+        game.gameNbr = getMaxGameNbr(date, game.gameGroup) + 1;
         game.playerLeft = playerLeft;
         game.playerRight = playerRight;
         game.pointsLeft = pointsLeft;
@@ -86,6 +91,7 @@ public class Game extends Model {
 
     private static void recalculateGameNbrsFrom(Game game) {
         List<Game> list = find.where()
+                .eq("gameGroup", game.gameGroup)
                 .or(Expr.gt("date", game.date), Expr.ge("gameNbr", game.gameNbr))
                 .orderBy("date, gameNbr").findList();
         int gameNbr = game.gameNbr;
@@ -97,8 +103,8 @@ public class Game extends Model {
         }
     }
 
-    private static int getMaxGameNbr(Date date) {
-        List<Game> list = find.where().le("date", date).orderBy("gameNbr desc").setMaxRows(1).findList();
+    private static int getMaxGameNbr(Date date, GameGroup gameGroup) {
+        List<Game> list = find.where().eq("gameGroup", gameGroup).le("date", date).orderBy("gameNbr desc").setMaxRows(1).findList();
         if (list.isEmpty()) {
             return 0;
         } else {

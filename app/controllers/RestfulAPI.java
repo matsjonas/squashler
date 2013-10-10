@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Game;
+import models.GameGroup;
 import models.Player;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -78,8 +79,9 @@ public class RestfulAPI extends Controller {
         Player playerRight = Player.byId(request.get("playerRight").asInt());
         int pointsLeft = request.get("pointsLeft").asInt();
         int pointsRight = request.get("pointsRight").asInt();
+        GameGroup gameGroup = GameGroup.byId(request.get("gameGroup").asInt());
 
-        Game game = Game.insert(date, playerLeft, playerRight, pointsLeft, pointsRight);
+        Game game = Game.insert(date, playerLeft, playerRight, pointsLeft, pointsRight, gameGroup);
 
         ObjectNode result = JsonUtils.newObjectNode();
         result.put("status", "OK");
@@ -121,7 +123,12 @@ public class RestfulAPI extends Controller {
     }
 
     public static Result games() {
-        List<Game> games = Game.all();
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+
+        GameGroup gameGroup = GameGroup.byId(request.get("gameGroup").asInt());
+
+        List<Game> games = Game.allInGroup(gameGroup.id);
         ArrayNode result = JsonUtils.newArrayNode();
         for (Game game : games) {
             result.add(getGameJsonNode(game));

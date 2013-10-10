@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Game;
+import models.GameGroup;
 import models.Player;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -34,7 +35,7 @@ public class Application extends Controller {
         form = form.bind(defaults);
 
         List<Player> all = Player.all();
-        return ok(overview.render(StandingsCalculator.create(Game.all(), Player.all()), form, all));
+        return ok(overview.render(StandingsCalculator.create(Game.allInGroup(Long.valueOf(session(GameGroupInSession.GAMEGROUP_SESSION_KEY))), Player.all()), form, all));
     }
 
     public static Result insert() {
@@ -70,13 +71,13 @@ public class Application extends Controller {
         }
 
         if(gameForm.hasErrors()) {
-            return badRequest(overview.render(StandingsCalculator.create(Game.all(), Player.all()), gameForm, Player.all()));
+            return badRequest(overview.render(StandingsCalculator.create(Game.allInGroup(Long.valueOf(session(GameGroupInSession.GAMEGROUP_SESSION_KEY))), Player.all()), gameForm, Player.all()));
         } else {
             Player player1 = Player.getOrCreate(playerLeftName);
             Player player2 = Player.getOrCreate(playerRightName);
             int pointsLeft = Integer.parseInt(pointsLeftString.trim());
             int pointsRight = Integer.parseInt(pointsRightString.trim());
-            Game.insert(date, player1, player2, pointsLeft, pointsRight);
+            Game.insert(date, player1, player2, pointsLeft, pointsRight, GameGroup.byId(Long.valueOf(session(GameGroupInSession.GAMEGROUP_SESSION_KEY))));
             flash("message", String.format("%s %s %d-%d added", playerLeftName, playerRightName, pointsLeft, pointsRight));
             return redirect(routes.Application.overview());
         }
@@ -114,7 +115,7 @@ public class Application extends Controller {
     }
 
     public static Result charts() {
-        return ok(charts.render(StandingsCalculator.create(Game.all(), Player.all())));
+        return ok(charts.render(StandingsCalculator.create(Game.allInGroup(Long.valueOf(session(GameGroupInSession.GAMEGROUP_SESSION_KEY))), Player.all())));
     }
 
 }
