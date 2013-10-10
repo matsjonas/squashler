@@ -8,6 +8,8 @@ import java.lang.annotation.*;
 
 public class GameGroupInSession {
 
+    public final static String GAMEGROUP_SESSION_KEY = "gameGroup";
+
     @With(GameGroupInSessionAction.class)
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.RUNTIME)
@@ -19,7 +21,7 @@ public class GameGroupInSession {
 
         public F.Promise<SimpleResult> call(Context ctx) {
             try {
-                String gameGroup = ctx.session().get("gameGroup");
+                String gameGroup = ctx.session().get(GAMEGROUP_SESSION_KEY);
 
                 if(gameGroup == null) {
                     Result redirect = redirect(routes.GameGroupPortal.gameGroups());

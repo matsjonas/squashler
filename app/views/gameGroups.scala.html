@@ -1,6 +1,6 @@
 @(groups: List[GameGroup], form: DynamicForm)
 
-@main("overview") {
+@main("gamegroups") {
 
     @if(groups.isEmpty()) {
         <div class="alert alert-danger alert-dismissable">
@@ -53,7 +53,7 @@
                 @for(gameGroup <- groups) {
                     <tr>
                         <td>@gameGroup.id</td>
-                        <td>@gameGroup.name</td>
+                        <td><a href="@routes.GameGroupPortal.selectGameGroup(gameGroup.id)">@gameGroup.name</a></td>
                     </tr>
                 }
             </table>
