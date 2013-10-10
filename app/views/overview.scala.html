@@ -1,6 +1,6 @@
 @(calc: util.StandingsCalculator, gameForm: DynamicForm, players: List[Player])
 
-@main("overview") {
+@main("overview") { <script type="text/javascript" src="@routes.Assets.at("javascripts/overview.js")"></script> } {
 
     <div class="row">
         <div class="col-md-5">
@@ -60,10 +60,25 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             <h1 class="panel-title">Results</h1>
+            Filter matches:
+            <select name="playerOne" id="playerOne" onchange="javascript:selectedPlayerOne()">
+                <option value="">Select player 1</option>
+                @for(player <- players) {
+                    <option value="@player.name" @if(player.name.equals(gameForm.get("playerOne"))) { selected="selected" }>@player.name</option>
+                }
+            </select>
+            <select name="playerTwo" id="playerTwo" style="display: none;">
+                <option value="">Select player 2</option>
+                @for(player <- players) {
+                <option value="@player.name" @if(player.name.equals(gameForm.get("playerTwo"))) { selected="selected" }>@player.name</option>
+                }
+            </select>
+            <button type="button" class="btn btn-success btn-xs" id="filterPlayers" onclick="javascript: filterPlayers();">Filter!</button>
         </div>
 
         <div class="panel-body">
-            <table class="table table-condensed table-striped table-hover table-xs-buttons">
+            <table class="table table-condensed table-striped table-hover table-xs-buttons" id="matchTable">
+                <thead>
                 <tr>
                     <th>Date</th>
                     <th>Left</th>
@@ -76,12 +91,14 @@
                     <th class="text-right hidden-xs">Stake</th>
                     <th class="text-right hidden-xs">After</th>
                 </tr>
+                </thead>
+                <tbody>
                 @for(wrapper <- calc.getGames) {
                     @defining(wrapper.getGame) { game =>
                     <tr>
                         <td>@game.date.format("yyyy-MM-dd")</td>
-                        <td>@game.playerLeft.name</td>
-                        <td>@game.playerRight.name</td>
+                        <td class="playerLeft">@game.playerLeft.name</td>
+                        <td class="playerRight">@game.playerRight.name</td>
                         <td class="text-right">@game.pointsLeft</td>
                         <td class="text-center">-</td>
                         <td class="text-left">@game.pointsRight</td>
@@ -94,6 +111,7 @@
                     </tr>
                     }
                 }
+                </tbody>
             </table>
         </div>
     </div>
