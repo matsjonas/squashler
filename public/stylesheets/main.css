@@ -24,11 +24,7 @@ html, body {
     font-size: 70px;
     text-shadow: 0 0 10px #CCC;
     margin-top: 30px;
-    margin-bottom: 25px;
-}
-
-p {
-    text-shadow: 0 0 1px #CCC;
+    margin-bottom: 45px;
 }
 
 table tbody>tr>th.min-width,
