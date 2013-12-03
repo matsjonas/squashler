@@ -20,7 +20,11 @@ POST          /remove-game/:id          controllers.Application.removeGame(id: L
 POST          /remove-player/:id        controllers.Application.removePlayer(id: Long)
 GET           /charts                   controllers.Application.charts()
 
+GET           /app                      controllers.App.start()
+
 # JSON API access points
+
+GET           /rest/gamegroups          controllers.RestfulAPI.gameGroups()
 
 GET           /rest/player/:id          controllers.RestfulAPI.player(id: Long)
 POST          /rest/player/             controllers.RestfulAPI.createPlayer()
@@ -32,7 +36,7 @@ POST          /rest/game/               controllers.RestfulAPI.createGame()
 PUT           /rest/game/:id            controllers.RestfulAPI.updateGame(id: Long)
 DELETE        /rest/game/:id            controllers.RestfulAPI.deleteGame(id: Long)
 
-GET           /rest/games               controllers.RestfulAPI.games()
+GET           /rest/games/:id           controllers.RestfulAPI.games(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file             controllers.Assets.at(path="/public", file)

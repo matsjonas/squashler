@@ -61,6 +61,14 @@ public class RestfulAPI extends Controller {
         return ok(result);
     }
 
+    public static Result gameGroups() {
+        ArrayNode result = JsonUtils.newArrayNode();
+        for (GameGroup gameGroup : GameGroup.all()) {
+            result.add(getGameGroupJsonNode(gameGroup));
+        }
+        return ok(result);
+    }
+
     public static Result game(long id) {
         Game game = Game.byId(id);
         return ok(getGameJsonNode(game));
@@ -122,18 +130,21 @@ public class RestfulAPI extends Controller {
         return ok(result);
     }
 
-    public static Result games() {
-        Http.RequestBody body = request().body();
-        JsonNode request = body.asJson();
-
-        GameGroup gameGroup = GameGroup.byId(request.get("gameGroup").asInt());
-
+    public static Result games(Long gameGroupId) {
+        GameGroup gameGroup = GameGroup.byId(gameGroupId);
         List<Game> games = Game.allInGroup(gameGroup.id);
         ArrayNode result = JsonUtils.newArrayNode();
         for (Game game : games) {
             result.add(getGameJsonNode(game));
         }
         return ok(result);
+    }
+
+    private static ObjectNode getGameGroupJsonNode(GameGroup gameGroup) {
+        ObjectNode result = JsonUtils.newObjectNode();
+        result.put("id", gameGroup.id);
+        result.put("name", gameGroup.name);
+        return result;
     }
 
     private static ObjectNode getPlayerJsonNode(Player player) {
