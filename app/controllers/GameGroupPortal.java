@@ -7,6 +7,7 @@ import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import util.Constants;
 import views.html.gameGroups;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class GameGroupPortal extends Controller {
     }
 
     public static Result selectGameGroup(long gamegroupid) {
-        session().put(GameGroupInSession.GAMEGROUP_SESSION_KEY, String.valueOf(gamegroupid));
+        session().put(Constants.SESSION_KEY_GAME_GROUP, String.valueOf(gamegroupid));
 
         return redirect(routes.Application.overview());
     }

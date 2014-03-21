@@ -4,6 +4,7 @@ import play.data.Form;
 import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.Constants;
 import views.html.login;
 
 import static play.data.Form.form;
@@ -24,7 +25,7 @@ public class Login extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session().clear();
-            session(Secured.COOKIE_SECURITY_KEY, Crypto.encryptAES(loginForm.get().username));
+            session(Constants.SESSION_KEY_SECURITY, Crypto.encryptAES(loginForm.get().username));
             return redirect(routes.Application.overview());
         }
     }
