@@ -1,5 +1,6 @@
 package controllers;
 
+import models.GameGroup;
 import play.libs.F;
 import play.mvc.*;
 import play.mvc.Http.*;
@@ -21,7 +22,8 @@ public class GameGroupInSession {
 
         public F.Promise<SimpleResult> call(Context ctx) {
             try {
-                String gameGroup = ctx.session().get(GAMEGROUP_SESSION_KEY);
+                long gameGroupId = Long.parseLong(ctx.session().get(GAMEGROUP_SESSION_KEY));
+                GameGroup gameGroup = GameGroup.byId(gameGroupId);
 
                 if(gameGroup == null) {
                     Result redirect = redirect(routes.GameGroupPortal.gameGroups());
