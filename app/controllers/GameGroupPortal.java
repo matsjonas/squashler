@@ -1,18 +1,18 @@
 package controllers;
 
+import filters.RequiresAuthentication;
 import models.Game;
 import models.GameGroup;
 import org.apache.commons.lang3.StringUtils;
 import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
 import util.Constants;
 import views.html.gameGroups;
 
 import java.util.List;
 
-@Security.Authenticated(Secured.class)
+@RequiresAuthentication
 public class GameGroupPortal extends Controller {
 
     public static Result gameGroups() {

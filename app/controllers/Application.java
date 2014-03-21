@@ -1,5 +1,7 @@
 package controllers;
 
+import filters.RequiresAuthentication;
+import filters.RequiresGameGroup;
 import models.Game;
 import models.GameGroup;
 import models.Player;
@@ -10,7 +12,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
 import util.Constants;
 import util.StandingsCalculator;
 import views.html.charts;
@@ -23,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@GameGroupInSession.Validated
-@Security.Authenticated(Secured.class)
+@RequiresGameGroup
+@RequiresAuthentication
 public class Application extends Controller {
 
     public static Result overview() {
