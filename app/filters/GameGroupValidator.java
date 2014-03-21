@@ -10,8 +10,12 @@ public class GameGroupValidator extends Action<RequiresGameGroup> {
 
     public F.Promise<SimpleResult> call(Http.Context ctx) {
         try {
-            long gameGroupId = Long.parseLong(ctx.session().get(Constants.SESSION_KEY_GAME_GROUP));
-            GameGroup gameGroup = GameGroup.byId(gameGroupId);
+            GameGroup gameGroup = null;
+
+            if (ctx.session().containsKey(Constants.SESSION_KEY_GAME_GROUP)) {
+                long gameGroupId = Long.parseLong(ctx.session().get(Constants.SESSION_KEY_GAME_GROUP));
+                gameGroup = GameGroup.byId(gameGroupId);
+            }
 
             if (gameGroup == null) {
                 Result redirect = Results.redirect(routes.GameGroupPortal.gameGroups());
