@@ -36,3 +36,4 @@ GET           /rest/games               controllers.RestfulAPI.games()
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file             controllers.Assets.at(path="/public", file)
+GET           /apple-touch-icon.png     controllers.Assets.at(path="/public", file="images/apple-touch-icon.png")
