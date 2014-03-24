@@ -55,9 +55,12 @@ public class RestfulAPI extends Controller {
         return ok();
     }
 
-    public static Result player(long id) {
-        Player player = Player.byId(id);
-        return ok(getPlayerJsonNode(player));
+    public static Result players() {
+        ArrayNode result = JsonUtils.newArrayNode();
+        for (Player player : Player.all()) {
+            result.add(getPlayerJsonNode(player));
+        }
+        return ok(result);
     }
 
     public static Result createPlayer() {
@@ -71,6 +74,11 @@ public class RestfulAPI extends Controller {
         result.put("status", "OK");
         result.put("player", getPlayerJsonNode(player));
         return ok(result);
+    }
+
+    public static Result player(long id) {
+        Player player = Player.byId(id);
+        return ok(getPlayerJsonNode(player));
     }
 
     public static Result updatePlayer(long id) {

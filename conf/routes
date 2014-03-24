@@ -30,9 +30,10 @@ GET           /rest/gamegroup/:id       controllers.RestfulAPI.gameGroup(id: Lon
 POST          /rest/gamegroup/:id       controllers.RestfulAPI.updateGameGroup(id: Long)
 DELETE        /rest/gamegroup/:id       controllers.RestfulAPI.deleteGameGroup(id: Long)
 
+GET           /rest/player              controllers.RestfulAPI.players()
+POST          /rest/player              controllers.RestfulAPI.createPlayer()
 GET           /rest/player/:id          controllers.RestfulAPI.player(id: Long)
-POST          /rest/player/             controllers.RestfulAPI.createPlayer()
-PUT           /rest/player/:id          controllers.RestfulAPI.updatePlayer(id: Long)
+POST          /rest/player/:id          controllers.RestfulAPI.updatePlayer(id: Long)
 DELETE        /rest/player/:id          controllers.RestfulAPI.deletePlayer(id: Long)
 
 GET           /rest/game/:id            controllers.RestfulAPI.game(id: Long)

@@ -75,7 +75,25 @@
             </form>
 
             <strong>Players</strong><br/>
-            <div>{{ players }}</div>
+            <form class="form-inline" role="form" data-ng-repeat="player in players">
+                <div class="form-group">
+                    <label class="sr-only" for="player-id">Id</label>
+                    <input type="text" class="form-control input-sm" id="player-id" placeholder="Id" data-ng-model="player.id" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="player-name">Password</label>
+                    <input type="text" class="form-control input-sm" id="player-name" placeholder="Name" data-ng-model="player.name">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="updatePlayer(player)">Update</button>
+                <button type="submit" class="btn btn-danger btn-sm" data-ng-click="deletePlayer(player)">Delete</button>
+            </form>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="player-name">Password</label>
+                    <input type="text" class="form-control input-sm" id="player-name" placeholder="New player name" data-ng-model="newPlayerName">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="createPlayer()">Create</button>
+            </form>
 
             <strong>Games</strong><br/>
             <div>{{ games }}</div>
