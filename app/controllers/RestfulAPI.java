@@ -19,6 +19,42 @@ import java.util.List;
 
 public class RestfulAPI extends Controller {
 
+    public static Result gameGroups() {
+        ArrayNode result = JsonUtils.newArrayNode();
+        for (GameGroup gameGroup : GameGroup.all()) {
+            result.add(getGameGroupJsonNode(gameGroup));
+        }
+        return ok(result);
+    }
+
+    public static Result createGameGroup() {
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+        String name = request.get("name").asText();
+        GameGroup gameGroup = GameGroup.insert(name);
+        return ok(getGameGroupJsonNode(gameGroup));
+    }
+
+    public static Result gameGroup(long id) {
+        GameGroup gameGroup = GameGroup.byId(id);
+        return ok(getGameGroupJsonNode(gameGroup));
+    }
+
+    public static Result updateGameGroup(long id) {
+        Http.RequestBody body = request().body();
+        JsonNode request = body.asJson();
+        String name = request.get("name").asText();
+        GameGroup gameGroup = GameGroup.byId(id);
+        gameGroup.name = name;
+        gameGroup.save();
+        return ok(getGameGroupJsonNode(gameGroup));
+    }
+
+    public static Result deleteGameGroup(long id) {
+        GameGroup.remove(id);
+        return ok();
+    }
+
     public static Result player(long id) {
         Player player = Player.byId(id);
         return ok(getPlayerJsonNode(player));
@@ -58,14 +94,6 @@ public class RestfulAPI extends Controller {
 
         ObjectNode result = JsonUtils.newObjectNode();
         result.put("status", "OK");
-        return ok(result);
-    }
-
-    public static Result gameGroups() {
-        ArrayNode result = JsonUtils.newArrayNode();
-        for (GameGroup gameGroup : GameGroup.all()) {
-            result.add(getGameGroupJsonNode(gameGroup));
-        }
         return ok(result);
     }
 
@@ -165,5 +193,4 @@ public class RestfulAPI extends Controller {
         node.put("pointsRight", game.pointsRight);
         return node;
     }
-
 }

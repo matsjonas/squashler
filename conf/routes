@@ -24,7 +24,11 @@ GET           /app                      controllers.App.start()
 
 # JSON API access points
 
-GET           /rest/gamegroups          controllers.RestfulAPI.gameGroups()
+GET           /rest/gamegroup           controllers.RestfulAPI.gameGroups()
+POST          /rest/gamegroup           controllers.RestfulAPI.createGameGroup()
+GET           /rest/gamegroup/:id       controllers.RestfulAPI.gameGroup(id: Long)
+POST          /rest/gamegroup/:id       controllers.RestfulAPI.updateGameGroup(id: Long)
+DELETE        /rest/gamegroup/:id       controllers.RestfulAPI.deleteGameGroup(id: Long)
 
 GET           /rest/player/:id          controllers.RestfulAPI.player(id: Long)
 POST          /rest/player/             controllers.RestfulAPI.createPlayer()

@@ -1,34 +1,42 @@
 angular.module('squashlerApp', ['ngResource'])
 
-    .controller('mainCtrl', function ($scope, GameGroups, Games) {
+    .controller('mainCtrl', function ($scope, GameGroup) {
 
         $scope.settings = {
-            group : undefined
+            group: undefined
         };
 
-        $scope.gamegroups = [];
+        $scope.gamegroups = GameGroup.query();
+        $scope.players = [];
         $scope.games = [];
 
-        GameGroups.query(function(response) {
-            $scope.gamegroups = response;
-        });
+        $scope.createGroup = function() {
+            var group = new GameGroup();
+            group.name = $scope.newGroupName;
+            group.$save(function() {
+                $scope.newGroupName = null;
+                $scope.gamegroups = GameGroup.query();
+            });
+        };
 
-        $scope.$watch('settings.group', function() {
-            if ($scope.settings.group) {
-                Games.query({id: $scope.settings.group.id}, function(response) {
-                    $scope.games = response;
-                });
-            }
-        });
+        $scope.updateGroup = function(group) {
+            group.$save(function() {
+                $scope.gamegroups = GameGroup.query();
+            });
+        };
 
-
+        $scope.deleteGroup = function(group) {
+            group.$delete(function() {
+                $scope.gamegroups = GameGroup.query();
+            });
+        };
 
     })
 
-    .factory('GameGroups', function ($resource) {
-        return $resource('/rest/gamegroups', {})
-    })
+    .factory('GameGroup', ['$resource', function ($resource) {
+        return $resource("./rest/gamegroup/:id", { id: '@id' });
+    }])
 
-    .factory('Games', function ($resource) {
-        return $resource('/rest/games/:id', {})
-    });
+    .factory('Player', ['$resource', function ($resource) {
+        return $resource("./rest/player/:id");
+    }]);

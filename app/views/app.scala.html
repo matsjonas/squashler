@@ -11,8 +11,10 @@
 
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
+
         <script src="@routes.Assets.at("angularjs/angular.min.js")"></script>
         <script src="@routes.Assets.at("angularjs/angular-resource.min.js")"></script>
+
         <script src="@routes.Assets.at("javascripts/main.js")"></script>
 
     </head>
@@ -48,8 +50,34 @@
 
             </div>
 
+            <strong>Settings</strong><br/>
             <div>{{ settings }}</div>
-            <div>{{ gamegroups }}</div>
+
+            <strong>Game Groups</strong><br/>
+            <form class="form-inline" role="form" data-ng-repeat="group in gamegroups">
+                <div class="form-group">
+                    <label class="sr-only" for="group-id">Id</label>
+                    <input type="text" class="form-control input-sm" id="group-id" placeholder="Id" data-ng-model="group.id" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="group-name">Password</label>
+                    <input type="text" class="form-control input-sm" id="group-name" placeholder="Name" data-ng-model="group.name">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="updateGroup(group)">Update</button>
+                <button type="submit" class="btn btn-danger btn-sm" data-ng-click="deleteGroup(group)">Delete</button>
+            </form>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="group-name">Password</label>
+                    <input type="text" class="form-control input-sm" id="group-name" placeholder="New group name" data-ng-model="newGroupName">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="createGroup()">Create</button>
+            </form>
+
+            <strong>Players</strong><br/>
+            <div>{{ players }}</div>
+
+            <strong>Games</strong><br/>
             <div>{{ games }}</div>
 
         </div>
