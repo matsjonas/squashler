@@ -96,7 +96,30 @@
             </form>
 
             <strong>Games</strong><br/>
-            <div>{{ games }}</div>
+            <div data-ng-repeat="game in games">{{ game }}</div>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="date">Password</label>
+                    <input type="text" class="form-control input-sm" id="date" placeholder="Date" data-ng-model="newGameDate">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="player-left">Password</label>
+                    <input type="text" class="form-control input-sm" id="player-left" placeholder="Player 1" data-ng-model="newGamePlayerLeft">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="player-right">Password</label>
+                    <input type="text" class="form-control input-sm" id="player-right" placeholder="Player 2" data-ng-model="newGamePlayerRight">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="points-left">Password</label>
+                    <input type="text" class="form-control input-sm" id="points-left" placeholder="Points 1" data-ng-model="newGamePointsLeft">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="points-right">Password</label>
+                    <input type="text" class="form-control input-sm" id="points-right" placeholder="Points 2" data-ng-model="newGamePointsRight">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-ng-click="createGame()" data-ng-disabled="!settings.group">Create</button>
+            </form>
 
         </div>
     </body>

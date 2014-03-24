@@ -105,25 +105,48 @@ public class RestfulAPI extends Controller {
         return ok(result);
     }
 
-    public static Result game(long id) {
-        Game game = Game.byId(id);
-        return ok(getGameJsonNode(game));
+    public static Result games(long gameGroupId) {
+        GameGroup gameGroup = GameGroup.byId(gameGroupId);
+        List<Game> games = Game.allInGroup(gameGroup.id);
+        ArrayNode result = JsonUtils.newArrayNode();
+        for (Game game : games) {
+            result.add(getGameJsonNode(game));
+        }
+        return ok(result);
     }
 
-    public static Result createGame() {
+    public static Result createGame(long gameGroupId) {
         Http.RequestBody body = request().body();
         JsonNode request = body.asJson();
 
         Date date = new Date();
-        try {
-            date = DateUtils.parseDate(request.get("date").asText(), "yyyy-MM-dd");
-        } catch (ParseException ignored) { }
+        if (request.has("date")) {
+            try {
+                date = DateUtils.parseDate(request.get("date").asText(), "yyyy-MM-dd");
+
+            } catch (ParseException ignored) {
+            }
+        }
+
+        if (!request.has("playerLeft") || !request.has("playerRight")) {
+            return badRequest("No players specified");
+        }
+        if (!request.has("pointsLeft") || !request.has("pointsRight")) {
+            return badRequest("No points specified");
+        }
 
         Player playerLeft = Player.byId(request.get("playerLeft").asInt());
         Player playerRight = Player.byId(request.get("playerRight").asInt());
         int pointsLeft = request.get("pointsLeft").asInt();
         int pointsRight = request.get("pointsRight").asInt();
-        GameGroup gameGroup = GameGroup.byId(request.get("gameGroup").asInt());
+        GameGroup gameGroup = GameGroup.byId(gameGroupId);
+
+        if (playerLeft == null || playerRight == null) {
+            return badRequest("Invalid players");
+        }
+        if (gameGroup == null) {
+            return badRequest("Invalid game group");
+        }
 
         Game game = Game.insert(date, playerLeft, playerRight, pointsLeft, pointsRight, gameGroup);
 
@@ -133,7 +156,15 @@ public class RestfulAPI extends Controller {
         return ok(result);
     }
 
-    public static Result updateGame(long id) {
+    public static Result game(long gameGroupId, long id) {
+        Game game = Game.byId(id);
+        if (game.gameGroup.id != gameGroupId) {
+            return badRequest("Game and group mismatch");
+        }
+        return ok(getGameJsonNode(game));
+    }
+
+    public static Result updateGame(long gameGroupId, long id) {
         Http.RequestBody body = request().body();
         JsonNode request = body.asJson();
 
@@ -149,6 +180,9 @@ public class RestfulAPI extends Controller {
         int pointsRight = request.get("pointsRight").asInt();
 
         Game game = Game.byId(id);
+        if (game.gameGroup.id != gameGroupId) {
+            return badRequest("Game and group mismatch");
+        }
         Game.update(game, date, playerLeft, playerRight, pointsLeft, pointsRight);
 
         ObjectNode result = JsonUtils.newObjectNode();
@@ -157,22 +191,15 @@ public class RestfulAPI extends Controller {
         return ok(result);
     }
 
-    public static Result deleteGame(long id) {
+    public static Result deleteGame(long gameGroupId, long id) {
         Game game = Game.byId(id);
+        if (game.gameGroup.id != gameGroupId) {
+            return badRequest("Game and group mismatch");
+        }
         game.delete();
 
         ObjectNode result = JsonUtils.newObjectNode();
         result.put("status", "OK");
-        return ok(result);
-    }
-
-    public static Result games(Long gameGroupId) {
-        GameGroup gameGroup = GameGroup.byId(gameGroupId);
-        List<Game> games = Game.allInGroup(gameGroup.id);
-        ArrayNode result = JsonUtils.newArrayNode();
-        for (Game game : games) {
-            result.add(getGameJsonNode(game));
-        }
         return ok(result);
     }
 
@@ -193,6 +220,7 @@ public class RestfulAPI extends Controller {
     private static ObjectNode getGameJsonNode(Game game) {
         ObjectNode node = JsonUtils.newObjectNode();
         node.put("id", game.id);
+        node.put("gameGroupId", game.gameGroup.id);
         node.put("date", DateFormatUtils.format(game.date, "yyyy-MM-dd HH:mm"));
         node.put("gameNbr", game.gameNbr);
         node.put("playerLeft", getPlayerJsonNode(game.playerLeft));
